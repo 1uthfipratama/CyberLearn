@@ -20,102 +20,151 @@
 
   
   <main class="center-stage glass forum-stage">
-    <h2>Forum Diskusi Keamanan Siber</h2>
-    <p class="muted">Tempat tanya jawab, berbagi pengalaman, dan diskusi seputar cybersecurity.</p>
+    <div class="quiz-header">
+      <div>
+        <h2>Forum Diskusi Keamanan Siber</h2>
+        <p class="muted">Tempat tanya jawab, berbagi pengalaman, dan diskusi seputar cybersecurity.</p>
+      </div>
+      <div class="pill">🤝 Saling bantu, tanpa bocor data</div>
+    </div>
 
-    <!-- Thread Q&A terbaru -->
-    <div class="card forum-block">
+    <section class="card forum-block glass">
       <h3>Diskusi Terbaru</h3>
+      <div class="forum-list">
+        <article class="forum-post">
+          <h4>[Q] Apa itu phishing dan bagaimana cara mengenalinya?</h4>
+          <p class="muted">oleh user123 • 2 jam lalu • Topik: Phishing</p>
+          <p>Phishing adalah upaya penipuan dengan berpura-pura menjadi pihak yang sah lewat email/pesan palsu untuk mencuri data sensitif seperti password atau OTP.</p>
+          <div class="forum-divider"></div>
+          <p class="muted"><strong>[A singkat]</strong> Cek alamat pengirim, jangan klik link mencurigakan, dan jangan pernah membagikan OTP ke siapa pun.</p>
+        </article>
 
-      <div class="forum-post">
-        <h4>[Q] Apa itu phishing dan bagaimana cara mengenalinya?</h4>
-        <p class="muted">oleh user123 • 2 jam lalu • Topik: Phishing</p>
-        <p>Phishing adalah upaya penipuan dengan berpura-pura menjadi pihak yang sah lewat email/pesan palsu untuk mencuri data sensitif seperti password atau OTP.</p>
-        <p class="muted"><strong>[A singkat]</strong> Cek alamat pengirim, jangan klik link mencurigakan, dan jangan pernah membagikan OTP ke siapa pun.</p>
+        <article class="forum-post">
+          <h4>[Q] Password saya sudah kuat, apakah masih perlu 2FA?</h4>
+          <p class="muted">oleh cyberNewbie • 5 jam lalu • Topik: Akun &amp; Password</p>
+          <p>2FA menambah lapisan keamanan kedua selain password. Jika password bocor, akunmu tetap terlindungi karena butuh kode tambahan (OTP, aplikasi authenticator, dsb).</p>
+          <div class="forum-divider"></div>
+          <p class="muted"><strong>[A singkat]</strong> Ya, 2FA sangat disarankan untuk email, media sosial, dan akun finansial.</p>
+        </article>
+
+        <article class="forum-post">
+          <h4>[Q] Apa bedanya smishing dan vishing?</h4>
+          <p class="muted">oleh studentA • kemarin • Topik: Social Engineering</p>
+          <p>Smishing adalah phishing lewat SMS atau chat, sedangkan vishing adalah phishing lewat panggilan suara/telepon.</p>
+          <div class="forum-divider"></div>
+          <p class="muted"><strong>[A singkat]</strong> Hati-hati jika ada pesan/telepon yang mendesak kamu kirim OTP atau data pribadi.</p>
+        </article>
+
+        <article class="forum-post">
+          <h4>[Q] Bolehkah menyimpan password di browser?</h4>
+          <p class="muted">oleh netsecLearner • 2 hari lalu • Topik: Akun &amp; Password</p>
+          <p>Relatif aman jika perangkat pribadi kamu terkunci (PIN/password/biometrik). Jangan pernah menyimpan password di komputer umum atau perangkat orang lain.</p>
+          <div class="forum-divider"></div>
+          <p class="muted"><strong>[A singkat]</strong> Lebih aman pakai password manager khusus, tapi kalau pun di browser, pastikan hanya di device pribadi.</p>
+        </article>
       </div>
+    </section>
 
-      <div class="forum-post">
-        <h4>[Q] Password saya sudah kuat, apakah masih perlu 2FA?</h4>
-        <p class="muted">oleh cyberNewbie • 5 jam lalu • Topik: Akun &amp; Password</p>
-        <p>2FA menambah lapisan keamanan kedua selain password. Jika password bocor, akunmu tetap terlindungi karena butuh kode tambahan (OTP, aplikasi authenticator, dsb).</p>
-        <p class="muted"><strong>[A singkat]</strong> Ya, 2FA sangat disarankan untuk email, media sosial, dan akun finansial.</p>
-      </div>
-
-      <div class="forum-post">
-        <h4>[Q] Apa bedanya smishing dan vishing?</h4>
-        <p class="muted">oleh studentA • kemarin • Topik: Social Engineering</p>
-        <p>Smishing adalah phishing lewat SMS atau chat, sedangkan vishing adalah phishing lewat panggilan suara/telepon.</p>
-        <p class="muted"><strong>[A singkat]</strong> Hati-hati jika ada pesan/telepon yang mendesak kamu kirim OTP atau data pribadi.</p>
-      </div>
-
-      <div class="forum-post">
-        <h4>[Q] Bolehkah menyimpan password di browser?</h4>
-        <p class="muted">oleh netsecLearner • 2 hari lalu • Topik: Akun &amp; Password</p>
-        <p>Relatif aman jika perangkat pribadi kamu terkunci (PIN/password/biometrik). Jangan pernah menyimpan password di komputer umum atau perangkat orang lain.</p>
-        <p class="muted"><strong>[A singkat]</strong> Lebih aman pakai password manager khusus, tapi kalau pun di browser, pastikan hanya di device pribadi.</p>
-      </div>
-    </div>
-
-    <!-- FAQ dasar cybersecurity -->
-    <div class="card forum-block">
+    <section class="card forum-block glass">
       <h3>FAQ Dasar Cybersecurity</h3>
+      <div class="forum-list">
+        <article class="forum-post">
+          <h4>Bagaimana ciri-ciri link berbahaya?</h4>
+          <ul>
+            <li>Alamat domain aneh atau tidak sesuai nama layanan resminya.</li>
+            <li>Meminta login padahal kamu mengakses dari link yang dikirim orang lain.</li>
+            <li>Banyak typo, tampilan tidak rapi, atau penuh pop-up.</li>
+          </ul>
+        </article>
 
-      <div class="forum-post">
-        <h4>Bagaimana ciri-ciri link berbahaya?</h4>
-        <ul>
-          <li>Alamat domain aneh atau tidak sesuai nama layanan resminya.</li>
-          <li>Meminta login padahal kamu mengakses dari link yang dikirim orang lain.</li>
-          <li>Banyak typo, tampilan tidak rapi, atau penuh pop-up.</li>
-        </ul>
+        <article class="forum-post">
+          <h4>Kapan harus ganti password?</h4>
+          <ul>
+            <li>Jika ada notifikasi login dari lokasi/perangkat yang tidak dikenal.</li>
+            <li>Jika akunmu mengirim pesan/postingan yang bukan kamu buat.</li>
+            <li>Secara berkala (misalnya tiap 3–6 bulan) untuk akun penting.</li>
+          </ul>
+        </article>
+
+        <article class="forum-post">
+          <h4>Apa saja contoh data pribadi yang harus dijaga?</h4>
+          <ul>
+            <li>Nomor telepon, alamat rumah, nomor identitas (KTP/NIK).</li>
+            <li>Email dan username yang dipakai untuk login.</li>
+            <li>Informasi finansial (rekening, kartu debit/kredit, e-wallet).</li>
+          </ul>
+        </article>
       </div>
+    </section>
 
-      <div class="forum-post">
-        <h4>Kapan harus ganti password?</h4>
-        <ul>
-          <li>Jika ada notifikasi login dari lokasi/perangkat yang tidak dikenal.</li>
-          <li>Jika akunmu mengirim pesan/postingan yang bukan kamu buat.</li>
-          <li>Secara berkala (misalnya tiap 3–6 bulan) untuk akun penting.</li>
-        </ul>
-      </div>
-
-      <div class="forum-post">
-        <h4>Apa saja contoh data pribadi yang harus dijaga?</h4>
-        <ul>
-          <li>Nomor telepon, alamat rumah, nomor identitas (KTP/NIK).</li>
-          <li>Email dan username yang dipakai untuk login.</li>
-          <li>Informasi finansial (rekening, kartu debit/kredit, e-wallet).</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Info & tips belajar cybersecurity -->
-    <div class="card forum-block">
+    <section class="card forum-block glass">
       <h3>Info &amp; Tips Belajar Cybersecurity</h3>
+      <div class="forum-list">
+        <article class="forum-post">
+          <h4>Pemula mulai dari mana?</h4>
+          <p>Mulai dari konsep dasar seperti keamanan akun, pengenalan phishing, dan cara menjaga perangkat tetap aman. Modul di CyberLearn sudah diurutkan dari level mudah ke lanjut.</p>
+        </article>
 
-      <div class="forum-post">
-        <h4>Pemula mulai dari mana?</h4>
-        <p>Mulai dari konsep dasar seperti keamanan akun, pengenalan phishing, dan cara menjaga perangkat tetap aman. Modul di CyberLearn sudah diurutkan dari level mudah ke lanjut.</p>
+        <article class="forum-post">
+          <h4>Tools gratis untuk latihan?</h4>
+          <ul>
+            <li>Website latihan phishing awareness (simulasi email/pesan palsu).</li>
+            <li>Password checker resmi (untuk cek kekuatan password, bukan yang random).</li>
+            <li>CTF (Capture The Flag) pemula untuk belajar berpikir seperti attacker.</li>
+          </ul>
+        </article>
+
+        <article class="forum-post">
+          <h4>Aturan forum CyberLearn</h4>
+          <ul>
+            <li>Jangan membagikan data pribadi (OTP, password, nomor kartu, dsb).</li>
+            <li>Diskusi seputar edukasi keamanan, bukan untuk melakukan serangan.</li>
+            <li>Gunakan bahasa yang sopan dan bantu anggota lain belajar.</li>
+          </ul>
+        </article>
       </div>
+    </section>
+  </main>
 
-      <div class="forum-post">
-        <h4>Tools gratis untuk latihan?</h4>
-        <ul>
-          <li>Website latihan phishing awareness (simulasi email/pesan palsu).</li>
-          <li>Password checker resmi (untuk cek kekuatan password, bukan yang random).</li>
-          <li>CTF (Capture The Flag) pemula untuk belajar berpikir seperti attacker.</li>
-        </ul>
+  <footer class="site-footer glass">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><div class="logo-icon"><img src="assets/img/logo1.png" alt="CyberLearn Logo" class="logo-img"></div><div class="logo-text">CyberLearn</div></div>
+        <p class="muted">Forum ramah pemula untuk belajar keamanan siber tanpa drama.</p>
+        <div class="tag">💬 Diskusi sehat, saling bantu</div>
       </div>
-
-      <div class="forum-post">
-        <h4>Aturan forum CyberLearn</h4>
-        <ul>
-          <li>Jangan membagikan data pribadi (OTP, password, nomor kartu, dsb).</li>
-          <li>Diskusi seputar edukasi keamanan, bukan untuk melakukan serangan.</li>
-          <li>Gunakan bahasa yang sopan dan bantu anggota lain belajar.</li>
-        </ul>
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="course.html">Kursus</a></li>
+            <li><a href="lesson.html">Modul</a></li>
+            <li><a href="quiz.html">Quiz</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Komunitas</h4>
+          <ul>
+            <li><a href="forum.html">Forum</a></li>
+            <li><a href="#">Kode Etik</a></li>
+            <li><a href="#">Laporan Penyalahgunaan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Kontak</h4>
+          <ul>
+            <li>Email: halo@cyberlearn.id</li>
+            <li>Telegram: @CyberLearn</li>
+            <li>Jakarta, Indonesia</li>
+          </ul>
+        </div>
       </div>
     </div>
-  </main>
+    <div class="footer-bottom">
+      <span>© 2025 CyberLearn. Hormati privasi, jangan bagikan data sensitif.</span>
+      <div class="tag">🔔 Laporkan konten mencurigakan</div>
+    </div>
+  </footer>
 
 
   <script src="assets/script.js"></script>
