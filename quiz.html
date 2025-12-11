@@ -19,18 +19,89 @@
   </header>
 
   <main class="center-stage glass quiz-stage">
-    <h2 id="qtitle">Quiz CyberLearn</h2>
-    <div class="card quiz-card">
-      <div id="qwrap">
-        <div id="qtext">Tekan "Mulai Quiz" untuk memulai.</div>
-        <div id="qopts"></div>
-      </div>
-      <div class="controls">
-        <button class="primary" id="startQuiz">Mulai Quiz</button>
-        <div class="muted">Skor: <span id="qscore">0</span></div>
-      </div>
+    <div class="quiz-shell">
+      <section class="quiz-meta glass">
+        <h3>Mode Belajar</h3>
+        <p class="muted" id="quizBlurb">Jawab pertanyaan pilihan ganda untuk menguji pemahaman modul.</p>
+        <div class="pill-row">
+          <div class="pill">⏱️ 10 soal</div>
+          <div class="pill">🏆 +10 poin per jawaban benar</div>
+          <div class="pill">🔄 Bisa ulang kapan saja</div>
+        </div>
+        <div class="quiz-empty">Jawaban tidak langsung disorot. Setelah pilih, akan terlihat mana yang benar dan lanjut ke soal berikutnya.</div>
+        <div class="forum-divider"></div>
+        <p class="muted-strong">Tips cepat</p>
+        <ul class="lesson-list">
+          <li>Baca pertanyaan dengan saksama sebelum klik.</li>
+          <li>Jika ragu, hilangkan opsi yang paling tidak mungkin.</li>
+          <li>Gunakan pengetahuan dari modul sebelum ini.</li>
+        </ul>
+      </section>
+
+      <section class="card quiz-card glass">
+        <div class="quiz-header">
+          <div>
+            <p class="muted-strong">Pertanyaan <span id="questionNumber">0</span>/<span id="questionCount">0</span></p>
+            <h2 id="qtitle">Quiz CyberLearn</h2>
+          </div>
+          <div class="score-box">
+            <div class="muted">Skor</div>
+            <div class="score-value" id="qscore">0</div>
+          </div>
+        </div>
+        <div class="quiz-progress"><div class="fill" id="qprogress"></div></div>
+        <div id="qwrap">
+          <div class="question" id="qtext">Tekan "Mulai" untuk memulai sesi.</div>
+          <div class="options" id="qopts"></div>
+        </div>
+        <div class="feedback" id="qfeedback">Tidak ada jawaban yang disorot sebelum kamu memilih.</div>
+        <div class="quiz-actions">
+          <button class="ghost" id="startQuiz">Mulai Quiz</button>
+          <button class="primary" id="nextBtn" disabled>Lanjut Soal</button>
+        </div>
+      </section>
     </div>
   </main>
+
+  <footer class="site-footer glass">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><div class="logo-icon"><img src="assets/img/logo1.png" alt="CyberLearn Logo" class="logo-img"></div><div class="logo-text">CyberLearn</div></div>
+        <p class="muted">Praktikkan teori dan uji pemahamanmu. Skor otomatis tercatat di sesi ini.</p>
+        <div class="tag">📊 Pelajari - Uji - Ulangi</div>
+      </div>
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Kelas</h4>
+          <ul>
+            <li><a href="course.html">Pilih Kursus</a></li>
+            <li><a href="lesson.html">Ringkasan Materi</a></li>
+            <li><a href="simulation.html">Simulasi</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resource</h4>
+          <ul>
+            <li><a href="forum.html">Forum</a></li>
+            <li><a href="#">Dokumentasi</a></li>
+            <li><a href="#">Kebijakan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Dukungan</h4>
+          <ul>
+            <li>Email: halo@cyberlearn.id</li>
+            <li>Telegram: @CyberLearn</li>
+            <li>Jakarta, Indonesia</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 CyberLearn. Bantu kami menjaga komunitas belajar yang sehat.</span>
+      <div class="tag">🧠 Belajar santai, hasil nyata</div>
+    </div>
+  </footer>
 
   <script src="assets/script.js"></script>
 </body>

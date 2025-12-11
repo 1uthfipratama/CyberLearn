@@ -56,6 +56,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
   // Quiz CyberLearn: 3 Courses (from PDF)
+  const lessonBank = {
+    '1': {
+      title: 'Dasar-Dasar Keamanan Siber',
+      intro: 'Kenali ancaman umum dan prinsip dasar menjaga data tetap aman.',
+      overview: 'Belajar konsep CIA triad, contoh ancaman sehari-hari, dan kebiasaan sederhana agar tidak lengah.',
+      duration: '⏱️ 12–15 menit belajar',
+      level: '🔰 Level pemula',
+      outcome: '🎯 Paham prinsip dasar & ancaman umum',
+      bullets: [
+        'Mengapa keamanan siber penting untuk semua orang.',
+        'CIA Triad: Confidentiality, Integrity, Availability.',
+        'Membedakan malware umum: virus, worm, ransomware.',
+        'Kebiasaan aman saat online & penggunaan perangkat umum.'
+      ],
+      checklist: [
+        'Selalu logout dari perangkat bersama.',
+        'Gunakan antivirus & update sistem berkala.',
+        'Hindari menginstal aplikasi dari sumber tidak jelas.'
+      ],
+      callout: 'Mulai dari kebiasaan kecil: update, backup, dan waspada saat klik link.',
+      quote: '“Keamanan dimulai dari kebiasaan sederhana yang diulang setiap hari.”',
+      quizBlurb: 'Uji pemahaman dasar keamanan siber sebelum melangkah ke topik lanjutan.'
+    },
+    '2': {
+      title: 'Keamanan Akun & Password',
+      intro: 'Bangun fondasi akun yang kuat dengan password kokoh dan 2FA.',
+      overview: 'Pelajari cara membuat password unik, menyimpan kredensial dengan aman, dan kapan harus ganti.',
+      duration: '⏱️ 10–12 menit belajar',
+      level: '🧠 Tingkat mudah',
+      outcome: '🎯 Akun lebih terlindungi dengan 2FA & password kuat',
+      bullets: [
+        'Ciri password kuat dan cara mengingatnya.',
+        'Menggunakan password manager dengan aman.',
+        'Mengaktifkan dan memanfaatkan Two-Factor Authentication.',
+        'Tanda akun bocor dan langkah cepat yang harus diambil.'
+      ],
+      checklist: [
+        'Aktifkan 2FA untuk email & media sosial utama.',
+        'Gunakan password unik untuk setiap layanan.',
+        'Pantau notifikasi login mencurigakan dan segera ganti password.'
+      ],
+      callout: 'Password kuat + 2FA = kombinasi terbaik untuk menahan serangan pembobolan akun.',
+      quote: '“Password mudah diingat tidak harus lemah, asal dibuat unik dan panjang.”',
+      quizBlurb: 'Pastikan kamu siap menjaga akun pribadi dari kebocoran dengan soal-soal singkat.'
+    },
+    '3': {
+      title: 'Phishing & Social Engineering',
+      intro: 'Kenali trik manipulasi manusia yang sering dipakai penyerang.',
+      overview: 'Belajar pola email/pesan palsu, smishing, vishing, dan cara bereaksi ketika data sudah terlanjur dibocorkan.',
+      duration: '⏱️ 12–15 menit belajar',
+      level: '⚡ Pemula menengah',
+      outcome: '🎯 Bisa menyaring pesan mencurigakan & melaporkannya',
+      bullets: [
+        'Ciri khas pesan phishing dan social engineering.',
+        'Langkah aman saat menerima link/OTP dari pihak tak dikenal.',
+        'Perbedaan smishing, vishing, dan phishing klasik.',
+        'Langkah pemulihan cepat jika sudah terlanjur klik link palsu.'
+      ],
+      checklist: [
+        'Selalu cek alamat pengirim dan domain.',
+        'Jangan pernah membagikan OTP ke siapa pun.',
+        'Laporkan pesan mencurigakan ke tim keamanan/penyedia layanan.'
+      ],
+      callout: 'Rasa panik dan buru-buru adalah senjata utama social engineer — ambil napas sebelum klik.',
+      quote: '“Waspada pada pesan mendesak yang meminta data pribadi, bahkan jika tampilannya meyakinkan.”',
+      quizBlurb: 'Cek ketelitianmu membaca tanda-tanda phishing sebelum menghadapi simulasi nyata.'
+    }
+  };
+
   const quizBank = {
     '1': {
       title: 'Dasar-Dasar Keamanan Siber',
@@ -261,54 +330,154 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const courseParam = getQueryParam('course') || '1';
   const currentQuiz = quizBank[courseParam] || quizBank['1'];
+  const currentLesson = lessonBank[courseParam] || lessonBank['1'];
   const qs = currentQuiz.questions;
 
   const qtext = document.getElementById('qtext');
   const qopts = document.getElementById('qopts');
   const qscore = document.getElementById('qscore');
   const startQuiz = document.getElementById('startQuiz');
+  const nextBtn = document.getElementById('nextBtn');
   const qtitle = document.getElementById('qtitle');
+  const questionNumberEl = document.getElementById('questionNumber');
+  const questionCountEl = document.getElementById('questionCount');
+  const progressFill = document.getElementById('qprogress');
+  const feedback = document.getElementById('qfeedback');
+  const quizBlurb = document.getElementById('quizBlurb');
 
   let qi = 0;
   let score = 0;
+  let locked = false;
+
+  if(questionCountEl) questionCountEl.textContent = qs.length;
+  if(quizBlurb && currentLesson?.quizBlurb) quizBlurb.textContent = currentLesson.quizBlurb;
+
+  // Lesson page population
+  const lessonTitle = document.getElementById('lessonTitle');
+  if(lessonTitle && currentLesson){
+    lessonTitle.textContent = currentLesson.title;
+    const intro = document.getElementById('lessonIntro');
+    const overview = document.getElementById('lessonOverview');
+    const duration = document.getElementById('lessonDuration');
+    const level = document.getElementById('lessonLevel');
+    const outcome = document.getElementById('lessonOutcome');
+    const bullets = document.getElementById('lessonBullets');
+    const checklist = document.getElementById('lessonChecklist');
+    const callout = document.getElementById('lessonCallout');
+    const quote = document.getElementById('lessonQuote');
+    const openQuiz = document.getElementById('openQuiz');
+
+    if(intro) intro.textContent = currentLesson.intro;
+    if(overview) overview.textContent = currentLesson.overview;
+    if(duration) duration.textContent = currentLesson.duration;
+    if(level) level.textContent = currentLesson.level;
+    if(outcome) outcome.textContent = currentLesson.outcome;
+    if(callout) callout.textContent = currentLesson.callout;
+    if(quote) quote.textContent = currentLesson.quote;
+    if(openQuiz) openQuiz.href = 'quiz.html?course=' + courseParam;
+
+    if(bullets){
+      bullets.innerHTML = '';
+      currentLesson.bullets.forEach(item=>{
+        const li = document.createElement('li');
+        li.textContent = item;
+        bullets.appendChild(li);
+      });
+    }
+    if(checklist){
+      checklist.innerHTML = '';
+      currentLesson.checklist.forEach(item=>{
+        const li = document.createElement('li');
+        li.textContent = item;
+        checklist.appendChild(li);
+      });
+    }
+  }
 
   if(qtitle && currentQuiz){
     qtitle.textContent = 'Quiz — ' + currentQuiz.title;
   }
+  if(qscore) qscore.textContent = score;
 
   if(startQuiz && qtext && qopts){
     startQuiz.addEventListener('click', ()=>{
-      qi = 0;
-      score = 0;
-      if(qscore) qscore.textContent = score;
+      beginQuiz();
+    });
+  }
+  if(nextBtn){
+    nextBtn.addEventListener('click', ()=>{
+      qi++;
       renderQ();
     });
   }
 
+  function beginQuiz(){
+    qi = 0;
+    score = 0;
+    locked = false;
+    if(qscore) qscore.textContent = score;
+    if(startQuiz) startQuiz.textContent = 'Mulai Ulang';
+    renderQ();
+  }
+
+  function updateProgressBar(){
+    const pct = qs.length ? Math.min((qi/qs.length)*100, 100) : 0;
+    if(progressFill) progressFill.style.width = pct + '%';
+    if(questionCountEl) questionCountEl.textContent = qs.length;
+    if(questionNumberEl) questionNumberEl.textContent = Math.min(qi+1, qs.length);
+  }
+
   function renderQ(){
+    if(!qtext || !qopts) return;
+    locked = false;
     const q = qs[qi];
+    if(feedback) feedback.textContent = 'Pilih jawaban terbaikmu, lalu klik lanjut.';
+    updateProgressBar();
+    if(nextBtn) nextBtn.disabled = true;
+
     if(!q){
       qtext.textContent = 'Quiz selesai! Skor kamu: ' + score;
-      qopts.innerHTML = '';
+      qopts.innerHTML = '<div class="quiz-empty">Kamu sudah menyelesaikan semua pertanyaan. Tekan "Mulai Ulang" untuk mencoba lagi.</div>';
       if(qscore) qscore.textContent = score;
+      if(progressFill) progressFill.style.width = '100%';
+      if(questionNumberEl) questionNumberEl.textContent = qs.length;
+      if(feedback) feedback.textContent = 'Bagikan skor ini di dashboard (demo).';
       return;
     }
+
     qtext.textContent = (qi+1) + '. ' + q.q;
     qopts.innerHTML = '';
     q.a.forEach((opt, idx)=>{
       const b = document.createElement('button');
-      b.className = idx === q.c ? 'primary' : 'ghost';
+      b.className = 'choice-btn';
       b.textContent = opt;
-      b.style.margin = '6px';
-      b.onclick = ()=>{
-        if(idx === q.c) score += 10;
-        else score -= 2;
-        if(qscore) qscore.textContent = score;
-        qi++;
-        renderQ();
-      };
+      b.addEventListener('click', ()=> handleAnswer(idx, q.c));
       qopts.appendChild(b);
     });
+  }
+
+  function handleAnswer(idx, correctIdx){
+    if(locked || !qopts) return;
+    locked = true;
+    if(idx === correctIdx){
+      score += 10;
+      if(feedback) feedback.textContent = 'Benar! Jawaban tepat menambah +10 poin.';
+    } else {
+      score = Math.max(0, score - 2);
+      if(feedback) feedback.textContent = 'Kurang tepat. Jawaban benar diberi highlight hijau.';
+    }
+    if(qscore) qscore.textContent = score;
+    const buttons = qopts.querySelectorAll('.choice-btn');
+    buttons.forEach((b, i)=>{
+      b.disabled = true;
+      if(i === correctIdx) b.classList.add('is-correct');
+      if(i === idx && idx !== correctIdx) b.classList.add('is-wrong');
+    });
+    if(progressFill) progressFill.style.width = ((qi+1)/qs.length)*100 + '%';
+    if(nextBtn){
+      nextBtn.disabled = false;
+      nextBtn.textContent = (qi === qs.length-1) ? 'Lihat Hasil' : 'Lanjut Soal';
+    }
   }
 // Simulation choices
   document.querySelectorAll('.sim-card .choices button').forEach(b=>{
