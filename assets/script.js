@@ -62,14 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
       intro: 'Kenali ancaman umum dan prinsip dasar menjaga data tetap aman.',
       overview: 'Belajar konsep CIA triad, contoh ancaman sehari-hari, dan kebiasaan sederhana agar tidak lengah.',
       duration: '⏱️ 12–15 menit belajar',
-      tempo: '📚 Baca, catat 3 contoh ancaman',
       level: '🔰 Level pemula',
       outcome: '🎯 Paham prinsip dasar & ancaman umum',
-      keyTerms: [
-        'CIA Triad: menjaga kerahasiaan, integritas, dan ketersediaan data.',
-        'Malware: perangkat lunak berbahaya (virus, worm, ransomware).',
-        'Backup: salinan data di lokasi lain untuk pemulihan cepat.'
-      ],
       bullets: [
         'Mengapa keamanan siber penting untuk semua orang.',
         'CIA Triad: Confidentiality, Integrity, Availability.',
@@ -81,20 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'Gunakan antivirus & update sistem berkala.',
         'Hindari menginstal aplikasi dari sumber tidak jelas.'
       ],
-      scenario: 'Kamu memakai Wi-Fi publik di kafe untuk membuka email kerja.',
-      steps: [
-        'Aktifkan VPN atau gunakan koneksi personal tethering.',
-        'Pastikan HTTPS dan jangan membuka data sensitif di Wi-Fi terbuka.',
-        'Logout setelah selesai, bersihkan tab dan history dasar.'
-      ],
-      actions: 'Cek jaringan aman, pastikan perangkat ter-update, dan simpan backup penting.',
-      flags: 'Waspada jika ada pop-up meminta instal plugin, atau ada sertifikat SSL tidak valid.',
-      practice: 'Lihat pengaturan keamanan browser kamu, aktifkan update otomatis dan proteksi phishing.',
-      resources: [
-        '☑️ Checklist: update OS, antivirus, dan browser.',
-        '☑️ Catat 3 contoh data sensitif yang tidak boleh dibagikan.',
-        '☑️ Siapkan backup mingguan di cloud terenkripsi.'
-      ],
       callout: 'Mulai dari kebiasaan kecil: update, backup, dan waspada saat klik link.',
       quote: '“Keamanan dimulai dari kebiasaan sederhana yang diulang setiap hari.”',
       quizBlurb: 'Uji pemahaman dasar keamanan siber sebelum melangkah ke topik lanjutan.'
@@ -104,14 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
       intro: 'Bangun fondasi akun yang kuat dengan password kokoh dan 2FA.',
       overview: 'Pelajari cara membuat password unik, menyimpan kredensial dengan aman, dan kapan harus ganti.',
       duration: '⏱️ 10–12 menit belajar',
-      tempo: '🔐 Cek password manager + aktifkan 2FA',
       level: '🧠 Tingkat mudah',
       outcome: '🎯 Akun lebih terlindungi dengan 2FA & password kuat',
-      keyTerms: [
-        '2FA/MFA: autentikasi dua faktor untuk menambah lapisan keamanan.',
-        'Password Manager: alat untuk menyimpan dan membuat kata sandi unik.',
-        'Credential leak: kebocoran data login di layanan lain yang ikut berdampak.'
-      ],
       bullets: [
         'Ciri password kuat dan cara mengingatnya.',
         'Menggunakan password manager dengan aman.',
@@ -123,20 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'Gunakan password unik untuk setiap layanan.',
         'Pantau notifikasi login mencurigakan dan segera ganti password.'
       ],
-      scenario: 'Notifikasi login mencurigakan muncul di email utama.',
-      steps: [
-        'Logout semua sesi dan ganti password dengan kombinasi kuat.',
-        'Aktifkan atau pastikan 2FA menyala, gunakan aplikasi authenticator.',
-        'Cek “recent activity” dan hapus perangkat asing.'
-      ],
-      actions: 'Audit password di 5 layanan paling sering dipakai dan perbaiki yang duplikat.',
-      flags: 'Email minta OTP atau link reset tanpa permintaanmu; abaikan dan ganti password langsung.',
-      practice: 'Buat satu kata sandi passphrase 3–4 kata unik dan simpan di password manager.',
-      resources: [
-        '☑️ Buat daftar akun kritikal (email, bank, media sosial).',
-        '☑️ Aktifkan 2FA untuk minimal dua akun hari ini.',
-        '☑️ Uji recovery: pastikan email/nomor pemulihan masih aktif.'
-      ],
       callout: 'Password kuat + 2FA = kombinasi terbaik untuk menahan serangan pembobolan akun.',
       quote: '“Password mudah diingat tidak harus lemah, asal dibuat unik dan panjang.”',
       quizBlurb: 'Pastikan kamu siap menjaga akun pribadi dari kebocoran dengan soal-soal singkat.'
@@ -146,14 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
       intro: 'Kenali trik manipulasi manusia yang sering dipakai penyerang.',
       overview: 'Belajar pola email/pesan palsu, smishing, vishing, dan cara bereaksi ketika data sudah terlanjur dibocorkan.',
       duration: '⏱️ 12–15 menit belajar',
-      tempo: '🎣 Baca contoh pesan, identifikasi 3 red flag',
       level: '⚡ Pemula menengah',
       outcome: '🎯 Bisa menyaring pesan mencurigakan & melaporkannya',
-      keyTerms: [
-        'Phishing: upaya tipu daya melalui pesan/email palsu.',
-        'Smishing/Vishing: phishing via SMS dan telepon.',
-        'Spoofing: menyamarkan identitas pengirim agar tampak resmi.'
-      ],
       bullets: [
         'Ciri khas pesan phishing dan social engineering.',
         'Langkah aman saat menerima link/OTP dari pihak tak dikenal.',
@@ -164,20 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'Selalu cek alamat pengirim dan domain.',
         'Jangan pernah membagikan OTP ke siapa pun.',
         'Laporkan pesan mencurigakan ke tim keamanan/penyedia layanan.'
-      ],
-      scenario: 'Mendapat email “admin bank” dengan link verifikasi mendesak.',
-      steps: [
-        'Cek domain pengirim dan arahkan kursor ke link tanpa mengklik.',
-        'Verifikasi lewat kanal resmi (aplikasi/telepon resmi) sebelum tindakan.',
-        'Laporkan dan tandai spam; jika sudah klik, segera ganti password dan aktifkan 2FA.'
-      ],
-      actions: 'Gunakan prinsip “berhenti-sejenak-cek sumber” sebelum klik link/OTP apa pun.',
-      flags: 'Pesan mendesak meminta OTP atau data pribadi, alamat domain typo, lampiran .exe/.apk mencurigakan.',
-      practice: 'Screenshot satu email mencurigakan (tanpa data sensitif) dan tandai 3 red flag.',
-      resources: [
-        '☑️ Buat template laporan phishing untuk tim/ISP.',
-        '☑️ Simpan nomor CS resmi bank/e-wallet di kontak.',
-        '☑️ Aktifkan filter spam dan update browser extension anti-phishing.'
       ],
       callout: 'Rasa panik dan buru-buru adalah senjata utama social engineer — ambil napas sebelum klik.',
       quote: '“Waspada pada pesan mendesak yang meminta data pribadi, bahkan jika tampilannya meyakinkan.”',
@@ -419,38 +359,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const intro = document.getElementById('lessonIntro');
     const overview = document.getElementById('lessonOverview');
     const duration = document.getElementById('lessonDuration');
-    const durationTop = document.getElementById('lessonDurationTop');
-    const tempo = document.getElementById('lessonTempo');
     const level = document.getElementById('lessonLevel');
     const outcome = document.getElementById('lessonOutcome');
     const bullets = document.getElementById('lessonBullets');
     const checklist = document.getElementById('lessonChecklist');
-    const keyTerms = document.getElementById('lessonKeyTerms');
-    const steps = document.getElementById('lessonSteps');
-    const scenario = document.getElementById('lessonScenario');
-    const actions = document.getElementById('lessonActions');
-    const flags = document.getElementById('lessonFlags');
-    const practice = document.getElementById('lessonPractice');
-    const resources = document.getElementById('lessonResources');
     const callout = document.getElementById('lessonCallout');
     const quote = document.getElementById('lessonQuote');
     const openQuiz = document.getElementById('openQuiz');
-    const quizBlurbBox = document.getElementById('lessonQuizBlurb');
 
     if(intro) intro.textContent = currentLesson.intro;
     if(overview) overview.textContent = currentLesson.overview;
     if(duration) duration.textContent = currentLesson.duration;
-    if(durationTop) durationTop.textContent = currentLesson.duration;
-    if(tempo) tempo.textContent = currentLesson.tempo || tempo.textContent;
     if(level) level.textContent = currentLesson.level;
     if(outcome) outcome.textContent = currentLesson.outcome;
     if(callout) callout.textContent = currentLesson.callout;
     if(quote) quote.textContent = currentLesson.quote;
-    if(quizBlurbBox) quizBlurbBox.textContent = currentLesson.quizBlurb;
-    if(scenario) scenario.textContent = currentLesson.scenario;
-    if(actions) actions.textContent = currentLesson.actions;
-    if(flags) flags.textContent = currentLesson.flags;
-    if(practice) practice.textContent = currentLesson.practice;
     if(openQuiz) openQuiz.href = 'quiz.html?course=' + courseParam;
 
     if(bullets){
@@ -467,31 +390,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = document.createElement('li');
         li.textContent = item;
         checklist.appendChild(li);
-      });
-    }
-    if(keyTerms){
-      keyTerms.innerHTML = '';
-      currentLesson.keyTerms.forEach(item=>{
-        const li = document.createElement('li');
-        li.textContent = item;
-        keyTerms.appendChild(li);
-      });
-    }
-    if(steps){
-      steps.innerHTML = '';
-      currentLesson.steps.forEach(item=>{
-        const div = document.createElement('div');
-        div.className = 'lesson-step';
-        div.textContent = item;
-        steps.appendChild(div);
-      });
-    }
-    if(resources){
-      resources.innerHTML = '';
-      currentLesson.resources.forEach(item=>{
-        const li = document.createElement('li');
-        li.textContent = item;
-        resources.appendChild(li);
       });
     }
   }
@@ -581,140 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
       nextBtn.textContent = (qi === qs.length-1) ? 'Lihat Hasil' : 'Lanjut Soal';
     }
   }
-  // Forum rendering & interaction
-  const forumList = document.getElementById('forumList');
-  if(forumList){
-    const forumSearch = document.getElementById('forumSearch');
-    const forumEmpty = document.getElementById('forumEmpty');
-    const postCount = document.getElementById('postCount');
-    const postForm = document.getElementById('postForm');
-    const postFlash = document.getElementById('postFlash');
-    const activeFilter = document.getElementById('activeFilter');
-    const memberCount = document.getElementById('memberCount');
-
-    const stored = JSON.parse(localStorage.getItem('cy_forum_posts') || '[]');
-    const basePosts = [
-      { title: 'Apa itu phishing dan bagaimana mengenalinya?', author: 'user123', time: '2 jam lalu', topic: 'Phishing', body: 'Phishing adalah upaya penipuan dengan berpura-pura menjadi pihak yang sah lewat email/pesan palsu untuk mencuri data sensitif seperti password atau OTP.', answer: 'Cek alamat pengirim, jangan klik link mencurigakan, dan jangan pernah membagikan OTP ke siapa pun.', tags: ['tips', 'pemula'], votes: 12 },
-      { title: 'Password saya sudah kuat, apakah masih perlu 2FA?', author: 'cyberNewbie', time: '5 jam lalu', topic: 'Akun & Password', body: '2FA menambah lapisan keamanan kedua selain password. Jika password bocor, akunmu tetap terlindungi karena butuh kode tambahan.', answer: 'Ya, 2FA sangat disarankan untuk email, media sosial, dan akun finansial.', tags: ['akun', '2FA'], votes: 18 },
-      { title: 'Apa bedanya smishing dan vishing?', author: 'studentA', time: 'kemarin', topic: 'Social Engineering', body: 'Smishing adalah phishing lewat SMS/chat, sedangkan vishing lewat panggilan suara/telepon.', answer: 'Hati-hati jika ada pesan/telepon yang mendesak kamu kirim OTP atau data pribadi.', tags: ['smishing', 'vishing'], votes: 9 },
-      { title: 'Bolehkah menyimpan password di browser?', author: 'netsecLearner', time: '2 hari lalu', topic: 'Akun & Password', body: 'Relatif aman jika perangkat pribadi terkunci (PIN/password/biometrik). Jangan simpan di komputer umum.', answer: 'Lebih aman pakai password manager khusus, tapi kalau di browser pastikan hanya di device pribadi.', tags: ['password', 'browser'], votes: 7 },
-    ];
-
-    let posts = [...basePosts, ...stored];
-
-    function saveUserPosts(){
-      const userPosts = posts.filter(p=>p.userGenerated);
-      localStorage.setItem('cy_forum_posts', JSON.stringify(userPosts));
-    }
-
-    function renderPosts(){
-      const term = (forumSearch?.value || '').toLowerCase();
-      const filtered = posts.filter(p=>
-        p.title.toLowerCase().includes(term) ||
-        p.topic.toLowerCase().includes(term) ||
-        p.body.toLowerCase().includes(term)
-      );
-      forumList.innerHTML = '';
-      if(activeFilter) activeFilter.textContent = term ? 'Kata kunci: ' + term : 'Semua';
-
-      if(filtered.length === 0){
-        if(forumEmpty) forumEmpty.hidden = false;
-        return;
-      }
-      if(forumEmpty) forumEmpty.hidden = true;
-
-      filtered.forEach((p, idx)=>{
-        const art = document.createElement('article');
-        art.className = 'forum-post';
-        const title = document.createElement('h4');
-        title.textContent = '[Q] ' + p.title;
-        const meta = document.createElement('p');
-        meta.className = 'muted';
-        meta.textContent = `oleh ${p.author} • ${p.time} • Topik: ${p.topic}`;
-        const body = document.createElement('p');
-        body.textContent = p.body;
-        const divider = document.createElement('div');
-        divider.className = 'forum-divider';
-        const answer = document.createElement('p');
-        answer.className = 'muted';
-        answer.innerHTML = `<strong>[A singkat]</strong> ${p.answer}`;
-        const footer = document.createElement('footer');
-        const left = document.createElement('div');
-        left.style.display = 'flex';
-        left.style.gap = '6px';
-        p.tags.forEach(t=>{
-          const chip = document.createElement('span');
-          chip.className = 'forum-chip';
-          chip.textContent = t;
-          left.appendChild(chip);
-        });
-        const right = document.createElement('div');
-        right.className = 'forum-chip';
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'btn';
-        btn.textContent = `👍 ${p.votes}`;
-        btn.addEventListener('click', ()=>{
-          posts[idx].votes += 1;
-          renderPosts();
-        });
-        right.textContent = '';
-        right.appendChild(btn);
-        footer.appendChild(left);
-        footer.appendChild(right);
-
-        art.appendChild(title);
-        art.appendChild(meta);
-        art.appendChild(body);
-        art.appendChild(divider);
-        art.appendChild(answer);
-        art.appendChild(footer);
-        forumList.appendChild(art);
-      });
-
-      if(postCount) postCount.textContent = posts.length;
-      if(memberCount) memberCount.textContent = '1.2k';
-    }
-
-    renderPosts();
-
-    if(forumSearch){
-      forumSearch.addEventListener('input', ()=>{
-        renderPosts();
-      });
-    }
-
-    if(postForm){
-      postForm.addEventListener('submit', (e)=>{
-        e.preventDefault();
-        const title = document.getElementById('postTitle').value.trim();
-        const author = document.getElementById('postName').value.trim() || 'Anon';
-        const topic = document.getElementById('postTopic').value;
-        const body = document.getElementById('postBody').value.trim();
-        if(!title || !body) return;
-        const newPost = {
-          title,
-          author,
-          topic,
-          body,
-          time: 'Baru saja',
-          answer: 'Menunggu tanggapan komunitas. Bagikan pengalamanmu!',
-          tags: [topic, 'pengguna'],
-          votes: 1,
-          userGenerated: true
-        };
-        posts = [newPost, ...posts];
-        saveUserPosts();
-        renderPosts();
-        postForm.reset();
-        if(postFlash){
-          postFlash.style.display = 'block';
-          setTimeout(()=> postFlash.style.display = 'none', 1800);
-        }
-      });
-    }
-  }
-
 // Simulation choices
   document.querySelectorAll('.sim-card .choices button').forEach(b=>{
     b.addEventListener('click', ()=>{

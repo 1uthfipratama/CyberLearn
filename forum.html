@@ -22,52 +22,51 @@
     </div>
   </header>
 
-  <section class="page-hero">
-    <div>
-      <h2>Forum CyberLearn — aman, rapi, responsif</h2>
-      <p class="muted">Pisahkan setiap post, sorot jawaban singkat, dan ikuti etika berbagi yang jelas.</p>
-    </div>
-    <div class="tag">🛡️ Tidak ada data sensitif, hanya edukasi</div>
-  </section>
-
-
+  
   <main class="center-stage glass forum-stage">
-    <div class="quiz-header forum-header">
+    <div class="quiz-header">
       <div>
         <h2>Forum Diskusi Keamanan Siber</h2>
         <p class="muted">Tempat tanya jawab, berbagi pengalaman, dan diskusi seputar cybersecurity.</p>
       </div>
-      <div class="forum-stats">
-        <div class="stat-pill">📌 <span id="postCount">4</span> diskusi aktif</div>
-        <div class="stat-pill">👥 <span id="memberCount">1.2k</span> anggota</div>
-      </div>
+      <div class="pill">🤝 Saling bantu, tanpa bocor data</div>
     </div>
 
     <section class="card forum-block glass">
-      <h3>Tambah pertanyaan baru</h3>
-      <p class="muted small">Pisahkan isi thread, beri konteks singkat, lalu pilih topik agar mudah ditemukan.</p>
-      <div class="post-success" id="postFlash">Topik berhasil ditambahkan! Terlihat di daftar terbaru.</div>
-      <form class="post-form" id="postForm">
-        <input id="postTitle" name="title" placeholder="Judul pertanyaan" required>
-        <input id="postName" name="author" placeholder="Nama / inisial" required>
-        <select id="postTopic" name="topic">
-          <option>Phishing</option>
-          <option>Akun &amp; Password</option>
-          <option>Perangkat &amp; Jaringan</option>
-          <option>Privasi Data</option>
-        </select>
-        <textarea id="postBody" name="body" placeholder="Berikan konteks singkat dan yang sudah kamu coba" required></textarea>
-        <button class="primary" type="submit">Publikasikan</button>
-      </form>
-    </section>
+      <h3>Diskusi Terbaru</h3>
+      <div class="forum-list">
+        <article class="forum-post">
+          <h4>[Q] Apa itu phishing dan bagaimana cara mengenalinya?</h4>
+          <p class="muted">oleh user123 • 2 jam lalu • Topik: Phishing</p>
+          <p>Phishing adalah upaya penipuan dengan berpura-pura menjadi pihak yang sah lewat email/pesan palsu untuk mencuri data sensitif seperti password atau OTP.</p>
+          <div class="forum-divider"></div>
+          <p class="muted"><strong>[A singkat]</strong> Cek alamat pengirim, jangan klik link mencurigakan, dan jangan pernah membagikan OTP ke siapa pun.</p>
+        </article>
 
-    <section class="card forum-block glass">
-      <div class="forum-header">
-        <h3>Diskusi Terbaru</h3>
-        <div class="forum-chip">🔎 Filter topik: <span id="activeFilter">Semua</span></div>
+        <article class="forum-post">
+          <h4>[Q] Password saya sudah kuat, apakah masih perlu 2FA?</h4>
+          <p class="muted">oleh cyberNewbie • 5 jam lalu • Topik: Akun &amp; Password</p>
+          <p>2FA menambah lapisan keamanan kedua selain password. Jika password bocor, akunmu tetap terlindungi karena butuh kode tambahan (OTP, aplikasi authenticator, dsb).</p>
+          <div class="forum-divider"></div>
+          <p class="muted"><strong>[A singkat]</strong> Ya, 2FA sangat disarankan untuk email, media sosial, dan akun finansial.</p>
+        </article>
+
+        <article class="forum-post">
+          <h4>[Q] Apa bedanya smishing dan vishing?</h4>
+          <p class="muted">oleh studentA • kemarin • Topik: Social Engineering</p>
+          <p>Smishing adalah phishing lewat SMS atau chat, sedangkan vishing adalah phishing lewat panggilan suara/telepon.</p>
+          <div class="forum-divider"></div>
+          <p class="muted"><strong>[A singkat]</strong> Hati-hati jika ada pesan/telepon yang mendesak kamu kirim OTP atau data pribadi.</p>
+        </article>
+
+        <article class="forum-post">
+          <h4>[Q] Bolehkah menyimpan password di browser?</h4>
+          <p class="muted">oleh netsecLearner • 2 hari lalu • Topik: Akun &amp; Password</p>
+          <p>Relatif aman jika perangkat pribadi kamu terkunci (PIN/password/biometrik). Jangan pernah menyimpan password di komputer umum atau perangkat orang lain.</p>
+          <div class="forum-divider"></div>
+          <p class="muted"><strong>[A singkat]</strong> Lebih aman pakai password manager khusus, tapi kalau pun di browser, pastikan hanya di device pribadi.</p>
+        </article>
       </div>
-      <div class="forum-list" id="forumList"></div>
-      <div class="forum-empty" id="forumEmpty" hidden>Tidak ada post dengan kata kunci tersebut.</div>
     </section>
 
     <section class="card forum-block glass">
