@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Dashboard — CyberLearn</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-fade">
+  <div class="app-bg"></div>
+
+  <header class="topbar">
+    <div class="logo"><div class="logo-icon"><img src="assets/img/logo1.png" alt="CyberLearn Logo" class="logo-img"></div><div class="logo-text">CyberLearn</div></div>
+    <nav class="nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="course.html" class="nav-link">Kursus</a>
+      <a href="dashboard.html" class="nav-link active">Dashboard</a>
+      <a href="forum.html" class="nav-link">Forum</a>
+      <a href="login.html" class="btn">Keluar</a>
+    </nav>
+  </header>
+
+  <main class="dash wrap">
+    <aside class="sidebar glass">
+      <div class="user">
+        <div class="user-avatar">FD</div>
+        <div>
+          <div class="user-name">Ferdinand Darmawan</div>
+          <div class="muted">Binusian · Student</div>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <a href="dashboard.html" class="slink active">Dashboard</a>
+        <a href="course.html" class="slink">Kursus</a>
+        <a href="quiz.html" class="slink">Quiz</a>
+        <a href="certificate.html" class="slink">Sertifikat</a>
+        <a href="forum.html" class="slink">Forum</a>
+      </nav>
+
+      <div class="badges">
+        <div class="badge glass" title="Badge: Starter"><div class="bicon">★</div>Starter</div>
+        <div class="badge glass" title="Badge: Secure"><div class="bicon">🔒</div>Secure</div>
+      </div>
+    </aside>
+
+    <section class="content">
+      <div class="card glass progress-card">
+        <div class="row between">
+          <div>
+            <h4>Progress Pembelajaran</h4>
+            <div class="muted">Anda telah menyelesaikan <strong id="doneCount">0</strong> dari 4 modul</div>
+          </div>
+          <div class="score glass small">Total Skor: <strong id="totalScore">0</strong></div>
+        </div>
+        <div class="big-progress">
+          <div class="big-pbar" id="bigPbar" style="--value:0%"><div class="big-fill"></div></div>
+          <div class="muted small">0% Selesai</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card glass course-card">
+          <div class="cc-left"><div class="cicon">🕵️</div></div>
+          <div class="cc-right">
+            <h4>Phishing & Social Engineering</h4>
+            <p class="muted">Pelajari cara mengenali dan menghindari serangan phishing</p>
+            <a class="primary full" href="course.html">Mulai Belajar</a>
+          </div>
+        </div>
+
+        <div class="card glass course-card">
+          <div class="cc-left"><div class="cicon">🔐</div></div>
+          <div class="cc-right">
+            <h4>Keamanan Password</h4>
+            <p class="muted">Teknik membuat dan mengelola password yang kuat</p>
+            <a class="primary full" href="course.html">Mulai Belajar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card glass course-card">
+          <div class="cc-left"><div class="cicon">🐛</div></div>
+          <div class="cc-right">
+            <h4>Malware Awareness</h4>
+            <p class="muted">Mengenali dan melindungi diri dari malware</p>
+            <a class="primary full" href="course.html">Mulai Belajar</a>
+          </div>
+        </div>
+
+        <div class="card glass course-card">
+          <div class="cc-left"><div class="cicon">🌐</div></div>
+          <div class="cc-right">
+            <h4>Keamanan Jaringan</h4>
+            <p class="muted">Dasar-dasar keamanan jaringan dan WiFi</p>
+            <a class="primary full" href="course.html">Mulai Belajar</a>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

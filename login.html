@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Login — CyberLearn</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-fade">
+  <div class="app-bg"></div>
+  <header class="topbar minimal">
+    <div class="logo"><div class="logo-icon"><img src="assets/img/logo1.png" alt="CyberLearn Logo" class="logo-img"></div><div class="logo-text">CyberLearn</div></div>
+  </header>
+
+  <main class="auth-stage glass">
+    <div class="tab">
+      <button class="tab-btn active" data-target="login">Login</button>
+      <button class="tab-btn" data-target="register">Daftar</button>
+    </div>
+
+    <form id="login" class="form active" onsubmit="return false;">
+      <h3>Selamat Datang Kembali</h3>
+      <label>Email<input id="email" type="email" placeholder="nama@email.com" required></label>
+      <label>Password<input id="password" type="password" placeholder="••••••••" required></label>
+      <div class="form-row">
+        <button class="primary" id="doLogin">Masuk</button>
+        <a class="ghost" href="register.html">Buat akun</a>
+      </div>
+    </form>
+
+    <form id="register" class="form" onsubmit="return false;">
+      <h3>Buat Akun Baru</h3>
+      <label>Nama Lengkap<input id="rname" placeholder="Nama Anda" required></label>
+      <label>Email<input id="remail" type="email" placeholder="nama@email.com" required></label>
+      <label>Password<input id="rpassword" type="password" placeholder="Minimal 6 karakter" required></label>
+      <div class="form-row">
+        <button class="primary" id="doRegister">Daftar Sekarang</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

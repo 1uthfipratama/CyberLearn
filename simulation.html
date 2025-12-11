@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Simulasi — CyberLearn</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-fade">
+  <div class="app-bg"></div>
+  <header class="topbar">
+    <div class="logo"><div class="logo-icon"><img src="assets/img/logo1.png" alt="CyberLearn Logo" class="logo-img"></div><div class="logo-text">CyberLearn</div></div>
+    <nav class="nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="course.html" class="nav-link">Kursus</a>
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <a href="forum.html" class="nav-link">Forum</a>
+      <a href="login.html" class="btn">Masuk</a>
+    </nav>
+  </header>
+
+  <main class="center-stage glass sim-stage">
+    <h2>Simulasi Social Engineering</h2>
+    <div class="card sim-card">
+      <p>Pilih respons terbaik untuk menghindari social engineering.</p>
+      <div class="choices">
+        <button class="primary" data-correct="true">Verifikasi melalui kanal resmi</button>
+        <button class="ghost" data-correct="false">Berikan informasi lewat chat</button>
+        <button class="ghost" data-correct="false">Klik link tidak dikenal</button>
+      </div>
+      <div id="simResult" class="muted" style="margin-top:12px"></div>
+    </div>
+  </main>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>

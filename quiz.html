@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <title>Quiz — CyberLearn</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="page-fade">
+  <div class="app-bg"></div>
+  <header class="topbar">
+    <div class="logo"><div class="logo-icon"><img src="assets/img/logo1.png" alt="CyberLearn Logo" class="logo-img"></div><div class="logo-text">CyberLearn</div></div>
+    <nav class="nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="course.html" class="nav-link">Kursus</a>
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <a href="forum.html" class="nav-link">Forum</a>
+      <a href="login.html" class="btn">Masuk</a>
+    </nav>
+  </header>
+
+  <main class="center-stage glass quiz-stage">
+    <h2 id="qtitle">Quiz CyberLearn</h2>
+    <div class="card quiz-card">
+      <div id="qwrap">
+        <div id="qtext">Tekan "Mulai Quiz" untuk memulai.</div>
+        <div id="qopts"></div>
+      </div>
+      <div class="controls">
+        <button class="primary" id="startQuiz">Mulai Quiz</button>
+        <div class="muted">Skor: <span id="qscore">0</span></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
