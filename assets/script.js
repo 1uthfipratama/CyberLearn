@@ -2,7 +2,6 @@
 // Basic interactions and animations for demo
 document.addEventListener('DOMContentLoaded', () => {
   injectQuizStyles();
-  injectDashboardStyles();
 
   function injectQuizStyles(){
     if(document.getElementById('quizEnhanceStyles')) return;
@@ -80,118 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
       @keyframes confettiFall{
         0%{ opacity: 0.95; }
         100%{ transform: translate3d(var(--x, 0px), 110vh, 0) rotate(var(--rot, 0deg)); opacity: 0; }
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  function injectDashboardStyles(){
-    if(document.getElementById('dashEnhanceStyles')) return;
-    const style = document.createElement('style');
-    style.id = 'dashEnhanceStyles';
-    style.textContent = `
-      .big-progress{
-        position: relative;
-        overflow: visible;
-      }
-      .radial-wrap{
-        position: absolute;
-        right: 12px;
-        top: -10px;
-        width: 110px;
-        height: 110px;
-        border-radius: 18px;
-        background: linear-gradient(135deg, rgba(43,110,246,0.08), rgba(31,78,216,0.12));
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255,255,255,0.12);
-        display: grid;
-        place-items: center;
-        box-shadow: 0 10px 30px rgba(43,110,246,0.12);
-      }
-      .radial-track{
-        width: 88px;
-        height: 88px;
-        border-radius: 50%;
-        background: conic-gradient(var(--accent, #2b6ef6) var(--val, 0%), rgba(255,255,255,0.12) 0);
-        display: grid;
-        place-items: center;
-        position: relative;
-        transition: background 0.2s ease;
-      }
-      .radial-track::after{
-        content: '';
-        position: absolute;
-        inset: 8px;
-        border-radius: 50%;
-        background: rgba(12,20,46,0.72);
-        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
-      }
-      .radial-value{
-        position: relative;
-        color: #e9f0ff;
-        font-weight: 700;
-        font-size: 18px;
-        text-shadow: 0 4px 14px rgba(31,78,216,0.35);
-      }
-      .big-pbar{ position: relative; }
-      .milestone{
-        position: absolute;
-        top: -14px;
-        transform: translateX(-50%);
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        color: #cfe0ff;
-        font-size: 11px;
-        background: rgba(43,110,246,0.1);
-        border: 1px solid rgba(43,110,246,0.25);
-        padding: 3px 6px;
-        border-radius: 10px;
-        backdrop-filter: blur(12px);
-        box-shadow: 0 8px 18px rgba(31,78,216,0.18);
-        opacity: 0.92;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      .milestone.hit{
-        transform: translateX(-50%) translateY(-4px) scale(1.02);
-        box-shadow: 0 12px 24px rgba(43,110,246,0.3);
-      }
-      .level-up{
-        animation: levelUpGlow 1s ease;
-      }
-      @keyframes levelUpGlow{
-        0%{ box-shadow: 0 0 0 0 rgba(43,110,246,0.15); }
-        50%{ box-shadow: 0 0 0 18px rgba(43,110,246,0); }
-        100%{ box-shadow: 0 0 0 0 rgba(43,110,246,0); }
-      }
-      canvas.progress-particles{
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        filter: drop-shadow(0 6px 12px rgba(43,110,246,0.35));
-      }
-      .progress-tooltip{
-        position: absolute;
-        padding: 8px 10px;
-        background: rgba(14,24,56,0.9);
-        border: 1px solid rgba(43,110,246,0.3);
-        border-radius: 10px;
-        color: #dfe8ff;
-        font-size: 12px;
-        box-shadow: 0 12px 24px rgba(0,0,0,0.35);
-        transform: translate(-50%, -120%);
-        white-space: nowrap;
-        opacity: 0;
-        transition: opacity 0.2s ease, transform 0.2s ease;
-        pointer-events: none;
-        z-index: 5;
-      }
-      .show-tooltip .progress-tooltip{
-        opacity: 1;
-        transform: translate(-50%, -140%);
-      }
-      @media(max-width: 720px){
-        .radial-wrap{ position: relative; margin: 10px auto 0; right: auto; top: auto; }
       }
     `;
     document.head.appendChild(style);
