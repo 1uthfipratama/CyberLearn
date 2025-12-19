@@ -1,7 +1,203 @@
 
 // Basic interactions and animations for demo
 document.addEventListener('DOMContentLoaded', () => {
-  // Tab switching on auth page
+  injectQuizStyles();
+  injectDashboardStyles();
+
+  function injectQuizStyles(){
+    if(document.getElementById('quizEnhanceStyles')) return;
+    const style = document.createElement('style');
+    style.id = 'quizEnhanceStyles';
+    style.textContent = `
+      .choice-btn{
+        position: relative;
+        transition: transform 0.2s ease, box-shadow 0.35s ease, border-color 0.3s ease, background 0.3s ease;
+      }
+      .choice-btn.is-choosing{
+        animation: choicePulse 0.45s ease forwards;
+        box-shadow: 0 10px 25px rgba(43, 110, 246, 0.25);
+      }
+      .choice-btn.is-correct{
+        transform: translateY(-1px) scale(1.02);
+        box-shadow: 0 0 0 3px rgba(43, 110, 246, 0.35), 0 14px 30px rgba(43, 110, 246, 0.25);
+      }
+      .choice-btn.is-wrong{
+        box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.25), 0 14px 30px rgba(244, 63, 94, 0.2);
+      }
+      .choice-btn:disabled{
+        cursor: not-allowed;
+      }
+      .choice-btn::after{
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 10px;
+        opacity: 0;
+        pointer-events: none;
+        background: radial-gradient(circle at center, rgba(43,110,246,0.2), transparent 60%);
+        transition: opacity 0.2s ease;
+      }
+      .choice-btn.is-choosing::after{ opacity: 1; }
+      @keyframes choicePulse{
+        0%{ transform: scale(1); }
+        50%{ transform: scale(1.025); }
+        100%{ transform: scale(1); }
+      }
+      .primary.pulse-ready{
+        animation: pulseReady 1.35s ease-in-out infinite;
+        box-shadow: 0 15px 35px rgba(43, 110, 246, 0.25);
+      }
+      @keyframes pulseReady{
+        0%{ box-shadow: 0 0 0 0 rgba(43, 110, 246, 0.55); }
+        100%{ box-shadow: 0 0 0 18px rgba(43, 110, 246, 0); }
+      }
+      .sound-toggle{
+        border: 1px solid rgba(255,255,255,0.15);
+        background: linear-gradient(135deg, rgba(43,110,246,0.14), rgba(31,78,216,0.2));
+        color: #e5edff;
+        padding: 8px 12px;
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        cursor: pointer;
+        font-size: 13px;
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+      }
+      .sound-toggle:hover{ transform: translateY(-1px); box-shadow: 0 8px 18px rgba(43,110,246,0.25); }
+      .sound-toggle.is-choosing{ animation: choicePulse 0.35s ease; }
+      .sound-toggle.muted{ opacity: 0.7; }
+      .confetti-piece{
+        position: fixed;
+        top: -12px;
+        width: 8px;
+        height: 14px;
+        border-radius: 3px;
+        background: linear-gradient(180deg, #2b6ef6, #1f4ed8);
+        opacity: 0.95;
+        pointer-events: none;
+        transform: translate3d(0,0,0);
+        animation: confettiFall var(--dur, 2.6s) ease-out forwards;
+      }
+      @keyframes confettiFall{
+        0%{ opacity: 0.95; }
+        100%{ transform: translate3d(var(--x, 0px), 110vh, 0) rotate(var(--rot, 0deg)); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function injectDashboardStyles(){
+    if(document.getElementById('dashEnhanceStyles')) return;
+    const style = document.createElement('style');
+    style.id = 'dashEnhanceStyles';
+    style.textContent = `
+      .big-progress{
+        position: relative;
+        overflow: visible;
+      }
+      .radial-wrap{
+        position: absolute;
+        right: 12px;
+        top: -10px;
+        width: 110px;
+        height: 110px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, rgba(43,110,246,0.08), rgba(31,78,216,0.12));
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.12);
+        display: grid;
+        place-items: center;
+        box-shadow: 0 10px 30px rgba(43,110,246,0.12);
+      }
+      .radial-track{
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        background: conic-gradient(var(--accent, #2b6ef6) var(--val, 0%), rgba(255,255,255,0.12) 0);
+        display: grid;
+        place-items: center;
+        position: relative;
+        transition: background 0.2s ease;
+      }
+      .radial-track::after{
+        content: '';
+        position: absolute;
+        inset: 8px;
+        border-radius: 50%;
+        background: rgba(12,20,46,0.72);
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+      }
+      .radial-value{
+        position: relative;
+        color: #e9f0ff;
+        font-weight: 700;
+        font-size: 18px;
+        text-shadow: 0 4px 14px rgba(31,78,216,0.35);
+      }
+      .big-pbar{ position: relative; }
+      .milestone{
+        position: absolute;
+        top: -14px;
+        transform: translateX(-50%);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        color: #cfe0ff;
+        font-size: 11px;
+        background: rgba(43,110,246,0.1);
+        border: 1px solid rgba(43,110,246,0.25);
+        padding: 3px 6px;
+        border-radius: 10px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 8px 18px rgba(31,78,216,0.18);
+        opacity: 0.92;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .milestone.hit{
+        transform: translateX(-50%) translateY(-4px) scale(1.02);
+        box-shadow: 0 12px 24px rgba(43,110,246,0.3);
+      }
+      .level-up{
+        animation: levelUpGlow 1s ease;
+      }
+      @keyframes levelUpGlow{
+        0%{ box-shadow: 0 0 0 0 rgba(43,110,246,0.15); }
+        50%{ box-shadow: 0 0 0 18px rgba(43,110,246,0); }
+        100%{ box-shadow: 0 0 0 0 rgba(43,110,246,0); }
+      }
+      canvas.progress-particles{
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        filter: drop-shadow(0 6px 12px rgba(43,110,246,0.35));
+      }
+      .progress-tooltip{
+        position: absolute;
+        padding: 8px 10px;
+        background: rgba(14,24,56,0.9);
+        border: 1px solid rgba(43,110,246,0.3);
+        border-radius: 10px;
+        color: #dfe8ff;
+        font-size: 12px;
+        box-shadow: 0 12px 24px rgba(0,0,0,0.35);
+        transform: translate(-50%, -120%);
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        pointer-events: none;
+        z-index: 5;
+      }
+      .show-tooltip .progress-tooltip{
+        opacity: 1;
+        transform: translate(-50%, -140%);
+      }
+      @media(max-width: 720px){
+        .radial-wrap{ position: relative; margin: 10px auto 0; right: auto; top: auto; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+// Tab switching on auth page
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -41,18 +237,209 @@ document.addEventListener('DOMContentLoaded', () => {
   const totalScoreEl = document.getElementById('totalScore');
   const doneCountEl = document.getElementById('doneCount');
   const bigPbar = document.getElementById('bigPbar');
+  const bigFill = bigPbar ? bigPbar.querySelector('.big-fill') : null;
   const user = localStorage.getItem('cy_user') || 'Tamu';
   // set name if exists
   const unameEls = document.querySelectorAll('.user-name');
   unameEls.forEach(el=> el.textContent = (user === 'tamu' ? 'Ferdinand Darmawan' : user.split('@')[0]));
 
-  // demo progress values
-  const done = 0;
-  const total = 4;
-  const pct = Math.round((done/total)*100);
-  if(doneCountEl) doneCountEl.textContent = done;
-  if(totalScoreEl) totalScoreEl.textContent = 0;
-  if(bigPbar){ bigPbar.style.setProperty('--value', pct + '%'); setTimeout(()=>{ bigPbar.querySelector('.big-fill').style.width = pct + '%'; }, 200); }
+  // Progress values (localStorage untuk persistensi ringan)
+  const storedDone = parseInt(localStorage.getItem('cy_done') || '0', 10);
+  const storedTotal = parseInt(localStorage.getItem('cy_total') || '4', 10);
+  const storedScore = parseInt(localStorage.getItem('cy_score') || '0', 10);
+  const done = Number.isFinite(storedDone) ? storedDone : 0;
+  const total = Number.isFinite(storedTotal) && storedTotal > 0 ? storedTotal : 4;
+  const scoreVal = Number.isFinite(storedScore) ? storedScore : 0;
+  const pct = Math.min(100, Math.max(0, Math.round((done/total)*100)));
+
+  const dashAnimations = {
+    targetPct: pct,
+    targetScore: scoreVal,
+    targetDone: done,
+    total
+  };
+
+  setupDashboardProgress();
+
+  function setupDashboardProgress(){
+    if(!bigPbar) return;
+    const container = bigPbar.parentElement;
+    if(!container) return;
+
+    const radialWrap = document.createElement('div');
+    radialWrap.className = 'radial-wrap glass';
+    const radialTrack = document.createElement('div');
+    radialTrack.className = 'radial-track';
+    const radialValue = document.createElement('div');
+    radialValue.className = 'radial-value';
+    radialValue.textContent = '0%';
+    radialTrack.appendChild(radialValue);
+    radialWrap.appendChild(radialTrack);
+    container.appendChild(radialWrap);
+
+    const milestoneContainer = document.createElement('div');
+    milestoneContainer.className = 'milestone-container';
+    bigPbar.appendChild(milestoneContainer);
+    const milestones = [25, 50, 75, 100].map(val=>{
+      const span = document.createElement('span');
+      span.className = 'milestone';
+      span.style.left = val + '%';
+      span.innerHTML = `${val}% <span aria-hidden="true">🎯</span>`;
+      span.dataset.value = val;
+      milestoneContainer.appendChild(span);
+      span.addEventListener('mouseenter', ()=>showTooltip(span, `Target tercapai ${val}%`));
+      span.addEventListener('mouseleave', hideTooltip);
+      return span;
+    });
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'progress-particles';
+    container.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    const particles = [];
+
+    const tooltip = document.createElement('div');
+    tooltip.className = 'progress-tooltip';
+    container.appendChild(tooltip);
+
+    function resizeCanvas(){
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.setTransform(1,0,0,1,0,0);
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const easing = easeOutCubic;
+    animateCounter(totalScoreEl, 0, dashAnimations.targetScore, 900, v=> Math.round(v));
+    animateCounter(doneCountEl, 0, dashAnimations.targetDone, 800, v=> Math.round(v));
+    animateProgress(dashAnimations.targetPct);
+
+    function animateProgress(target){
+      if(!bigFill) return;
+      const start = 0;
+      const duration = 1100;
+      const startTime = performance.now();
+      const startWidth = parseFloat(bigFill.style.width) || 0;
+      const endWidth = target;
+
+      function frame(now){
+        const t = Math.min((now - startTime)/duration, 1);
+        const eased = easing(t);
+        const current = startWidth + (endWidth - startWidth) * eased;
+        bigFill.style.width = current + '%';
+        bigPbar.style.setProperty('--value', current + '%');
+        radialTrack.style.setProperty('--val', current + '%');
+        radialValue.textContent = Math.round(current) + '%';
+        updateMilestones(current);
+        if(t < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function animateCounter(el, start, end, duration, formatter = v=>v){
+      if(!el) return;
+      const sTime = performance.now();
+      function tick(now){
+        const t = Math.min((now - sTime)/duration, 1);
+        const eased = easeOutExpo(t);
+        const val = start + (end - start) * eased;
+        el.textContent = formatter(val);
+        if(t < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function updateMilestones(currentPct){
+      milestones.forEach(span=>{
+        const val = parseInt(span.dataset.value, 10);
+        const hit = currentPct >= val;
+        span.classList.toggle('hit', hit);
+        if(hit && !span.dataset.burst){
+          span.dataset.burst = '1';
+          triggerLevelUp();
+          spawnBurst(val/100);
+        }
+      });
+    }
+
+    function spawnBurst(ratio){
+      const rect = bigPbar.getBoundingClientRect();
+      const parentRect = container.getBoundingClientRect();
+      const originX = (rect.left - parentRect.left) + rect.width * ratio;
+      const originY = (rect.top - parentRect.top) + rect.height/2;
+      for(let i=0;i<14;i++){
+        particles.push({
+          x: originX + (Math.random()*18 - 9),
+          y: originY + (Math.random()*10 - 5),
+          vx: (Math.random()*1.2 - 0.6),
+          vy: (Math.random()*-1.2 - 0.3),
+          life: 60 + Math.random()*30,
+          size: 2 + Math.random()*2.5,
+          hue: 210 + Math.random()*30
+        });
+      }
+    }
+
+    function drawParticles(){
+      ctx.clearRect(0,0,canvas.width, canvas.height);
+      particles.forEach(p=>{
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.02;
+        p.life -= 1;
+      });
+      for(let i=particles.length-1;i>=0;i--){
+        const p = particles[i];
+        if(p.life <=0){ particles.splice(i,1); continue; }
+        ctx.save();
+        ctx.fillStyle = `hsla(${p.hue}, 85%, 70%, ${p.life/90})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+    requestAnimationFrame(function loop(){
+      drawParticles();
+      requestAnimationFrame(loop);
+    });
+
+    function triggerLevelUp(){
+      bigPbar.classList.add('level-up');
+      radialTrack.classList.add('level-up');
+      setTimeout(()=>{
+        bigPbar.classList.remove('level-up');
+        radialTrack.classList.remove('level-up');
+      }, 850);
+    }
+
+    function showTooltip(target, text){
+      tooltip.textContent = text;
+      const rect = target.getBoundingClientRect();
+      const parentRect = container.getBoundingClientRect();
+      const centerX = rect.left - parentRect.left + rect.width/2;
+      tooltip.style.left = `${centerX}px`;
+      tooltip.style.top = `${rect.top - parentRect.top - 8}px`;
+      container.classList.add('show-tooltip');
+    }
+
+    function hideTooltip(){
+      container.classList.remove('show-tooltip');
+    }
+
+    container.addEventListener('mouseenter', ()=>showTooltip(bigPbar, `Progres: ${dashAnimations.targetPct}% (${dashAnimations.targetDone}/${dashAnimations.total})`));
+    container.addEventListener('mouseleave', hideTooltip);
+    radialWrap.addEventListener('mouseenter', ()=>showTooltip(radialWrap, `Skor total: ${dashAnimations.targetScore}`));
+    radialWrap.addEventListener('mouseleave', hideTooltip);
+  }
+
+  function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+  function easeOutExpo(t){ return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); }
 
   
   // Quiz CyberLearn: 3 Courses (from PDF)
@@ -343,11 +730,59 @@ document.addEventListener('DOMContentLoaded', () => {
   const questionCountEl = document.getElementById('questionCount');
   const progressFill = document.getElementById('qprogress');
   const feedback = document.getElementById('qfeedback');
+  const qwrap = document.getElementById('qwrap');
   const quizBlurb = document.getElementById('quizBlurb');
+  const quizActions = document.querySelector('.quiz-actions');
+
+  let audioCtx;
+  let soundOn = localStorage.getItem('cy_quiz_sound') !== 'off';
+  let soundToggleBtn;
+
+  const contextualFeedback = {
+    '1': {
+      correct: [
+        'Mantap! Kamu menerapkan prinsip CIA Triad dengan tepat.',
+        'Jawaban pas, keamanan dasar jadi lebih kuat.',
+        'Hebat, kebiasaan aman makin menempel di ingatanmu.'
+      ],
+      wrong: [
+        'Perhatikan konsep kerahasiaan, integritas, dan ketersediaan untuk pilihan ini.',
+        'Coba ingat kembali contoh ancaman umum dan praktik paling aman.',
+        'Tinjau lagi prinsip dasar: mana yang paling melindungi data?'
+      ]
+    },
+    '2': {
+      correct: [
+        'Keren! Kebiasaan password-mu sudah sesuai best practice.',
+        'Pas banget, kombinasi perlindungan akunmu makin kuat.',
+        'Jago! Kamu paham cara menjaga kredensial tetap aman.'
+      ],
+      wrong: [
+        'Ingat: password unik + 2FA selalu jadi kombinasi terbaik.',
+        'Coba pikirkan kembali apa yang membuat password mudah dibobol.',
+        'Lihat lagi contoh pengelolaan password yang aman dan tidak diulang.'
+      ]
+    },
+    '3': {
+      correct: [
+        'Cermat! Kamu mengenali pola phishing dengan sigap.',
+        'Bagus, insting anti-social engineering kamu tajam.',
+        'Mantap, kamu tahu kapan harus berhenti sebelum tertipu.'
+      ],
+      wrong: [
+        'Ingat: selalu curigai pesan mendesak yang minta data atau OTP.',
+        'Coba evaluasi ciri-ciri phishing: domain, urgensi, dan permintaan data.',
+        'Kalau ragu, jangan klik—periksa dulu alamat dan sumber pesan.'
+      ]
+    }
+  };
 
   let qi = 0;
   let score = 0;
   let locked = false;
+  let revealTimeout;
+
+  initSoundToggle();
 
   if(questionCountEl) questionCountEl.textContent = qs.length;
   if(quizBlurb && currentLesson?.quizBlurb) quizBlurb.textContent = currentLesson.quizBlurb;
@@ -408,6 +843,9 @@ document.addEventListener('DOMContentLoaded', () => {
     nextBtn.addEventListener('click', ()=>{
       qi++;
       renderQ();
+      setTimeout(()=>{
+        if(qwrap) qwrap.scrollIntoView({behavior: 'smooth', block: 'center'});
+      }, 80);
     });
   }
 
@@ -430,10 +868,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderQ(){
     if(!qtext || !qopts) return;
     locked = false;
+    if(revealTimeout) clearTimeout(revealTimeout);
     const q = qs[qi];
     if(feedback) feedback.textContent = 'Pilih jawaban terbaikmu, lalu klik lanjut.';
     updateProgressBar();
-    if(nextBtn) nextBtn.disabled = true;
+    if(nextBtn){
+      nextBtn.disabled = true;
+      nextBtn.classList.remove('pulse-ready');
+    }
 
     if(!q){
       qtext.textContent = 'Quiz selesai! Skor kamu: ' + score;
@@ -442,6 +884,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if(progressFill) progressFill.style.width = '100%';
       if(questionNumberEl) questionNumberEl.textContent = qs.length;
       if(feedback) feedback.textContent = 'Bagikan skor ini di dashboard (demo).';
+      triggerConfetti();
       return;
     }
 
@@ -459,24 +902,107 @@ document.addEventListener('DOMContentLoaded', () => {
   function handleAnswer(idx, correctIdx){
     if(locked || !qopts) return;
     locked = true;
-    if(idx === correctIdx){
-      score += 10;
-      if(feedback) feedback.textContent = 'Benar! Jawaban tepat menambah +10 poin.';
-    } else {
-      score = Math.max(0, score - 2);
-      if(feedback) feedback.textContent = 'Kurang tepat. Jawaban benar diberi highlight hijau.';
-    }
-    if(qscore) qscore.textContent = score;
     const buttons = qopts.querySelectorAll('.choice-btn');
-    buttons.forEach((b, i)=>{
+    buttons.forEach((b)=>{
       b.disabled = true;
-      if(i === correctIdx) b.classList.add('is-correct');
-      if(i === idx && idx !== correctIdx) b.classList.add('is-wrong');
     });
-    if(progressFill) progressFill.style.width = ((qi+1)/qs.length)*100 + '%';
-    if(nextBtn){
-      nextBtn.disabled = false;
-      nextBtn.textContent = (qi === qs.length-1) ? 'Lihat Hasil' : 'Lanjut Soal';
+    const selected = buttons[idx];
+    if(selected) selected.classList.add('is-choosing');
+    if(feedback) feedback.textContent = 'Memeriksa jawabanmu...';
+
+    revealTimeout = setTimeout(()=>{
+      const isCorrect = idx === correctIdx;
+      if(isCorrect){
+        score += 10;
+      } else {
+        score = Math.max(0, score - 2);
+      }
+      const message = getFeedbackText(isCorrect, courseParam);
+      if(feedback) feedback.textContent = message;
+      if(qscore) qscore.textContent = score;
+
+      buttons.forEach((b, i)=>{
+        b.classList.remove('is-choosing');
+        if(i === correctIdx) b.classList.add('is-correct');
+        if(i === idx && idx !== correctIdx) b.classList.add('is-wrong');
+      });
+      playTone(isCorrect ? 'success' : 'error');
+
+      if(progressFill) progressFill.style.width = ((qi+1)/qs.length)*100 + '%';
+      if(nextBtn){
+        nextBtn.disabled = false;
+        nextBtn.textContent = (qi === qs.length-1) ? 'Lihat Hasil' : 'Lanjut Soal';
+        nextBtn.classList.add('pulse-ready');
+      }
+    }, 500);
+  }
+
+  function getFeedbackText(isCorrect, courseKey){
+    const bank = contextualFeedback[courseKey] || contextualFeedback['1'];
+    const list = isCorrect ? bank.correct : bank.wrong;
+    if(list && list.length){
+      const i = Math.floor(Math.random() * list.length);
+      return list[i];
+    }
+    return isCorrect ? 'Benar! Jawaban tepat menambah +10 poin.' : 'Kurang tepat. Pelajari lagi topiknya.';
+  }
+
+  function initSoundToggle(){
+    if(!quizActions || soundToggleBtn) return;
+    soundToggleBtn = document.createElement('button');
+    soundToggleBtn.className = 'sound-toggle';
+    updateSoundToggleLabel();
+    soundToggleBtn.addEventListener('click', ()=>{
+      soundOn = !soundOn;
+      localStorage.setItem('cy_quiz_sound', soundOn ? 'on' : 'off');
+      updateSoundToggleLabel();
+      soundToggleBtn.classList.add('is-choosing');
+      setTimeout(()=> soundToggleBtn.classList.remove('is-choosing'), 250);
+    });
+    quizActions.insertBefore(soundToggleBtn, quizActions.firstChild);
+  }
+
+  function updateSoundToggleLabel(){
+    if(!soundToggleBtn) return;
+    soundToggleBtn.textContent = soundOn ? '🔊 Suara aktif' : '🔈 Suara mati';
+    soundToggleBtn.classList.toggle('muted', !soundOn);
+  }
+
+  function playTone(type){
+    if(!soundOn) return;
+    try{
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      const now = audioCtx.currentTime;
+      const freq = type === 'success' ? 820 : 260;
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.exponentialRampToValueAtTime(0.08, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.28);
+    } catch(e){}
+  }
+
+  function triggerConfetti(){
+    const pieces = 28;
+    for(let i=0; i<pieces; i++){
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      const randomX = Math.random()*100;
+      const rotate = (Math.random()*180 - 90).toFixed(0) + 'deg';
+      const duration = (Math.random()*1.3 + 1.9).toFixed(2) + 's';
+      el.style.left = randomX + 'vw';
+      el.style.setProperty('--x', (Math.random()*120 - 60) + 'px');
+      el.style.setProperty('--rot', rotate);
+      el.style.setProperty('--dur', duration);
+      el.style.opacity = (Math.random()*0.3 + 0.7).toFixed(2);
+      el.style.background = Math.random() > 0.5 ? 'linear-gradient(180deg, #2b6ef6, #1f4ed8)' : 'linear-gradient(180deg, #7bdcff, #2b6ef6)';
+      document.body.appendChild(el);
+      setTimeout(()=> el.remove(), parseFloat(duration)*1000 + 300);
     }
   }
 // Simulation choices
