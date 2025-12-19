@@ -124,18 +124,209 @@ document.addEventListener('DOMContentLoaded', () => {
   const totalScoreEl = document.getElementById('totalScore');
   const doneCountEl = document.getElementById('doneCount');
   const bigPbar = document.getElementById('bigPbar');
+  const bigFill = bigPbar ? bigPbar.querySelector('.big-fill') : null;
   const user = localStorage.getItem('cy_user') || 'Tamu';
   // set name if exists
   const unameEls = document.querySelectorAll('.user-name');
   unameEls.forEach(el=> el.textContent = (user === 'tamu' ? 'Ferdinand Darmawan' : user.split('@')[0]));
 
-  // demo progress values
-  const done = 0;
-  const total = 4;
-  const pct = Math.round((done/total)*100);
-  if(doneCountEl) doneCountEl.textContent = done;
-  if(totalScoreEl) totalScoreEl.textContent = 0;
-  if(bigPbar){ bigPbar.style.setProperty('--value', pct + '%'); setTimeout(()=>{ bigPbar.querySelector('.big-fill').style.width = pct + '%'; }, 200); }
+  // Progress values (localStorage untuk persistensi ringan)
+  const storedDone = parseInt(localStorage.getItem('cy_done') || '0', 10);
+  const storedTotal = parseInt(localStorage.getItem('cy_total') || '4', 10);
+  const storedScore = parseInt(localStorage.getItem('cy_score') || '0', 10);
+  const done = Number.isFinite(storedDone) ? storedDone : 0;
+  const total = Number.isFinite(storedTotal) && storedTotal > 0 ? storedTotal : 4;
+  const scoreVal = Number.isFinite(storedScore) ? storedScore : 0;
+  const pct = Math.min(100, Math.max(0, Math.round((done/total)*100)));
+
+  const dashAnimations = {
+    targetPct: pct,
+    targetScore: scoreVal,
+    targetDone: done,
+    total
+  };
+
+  setupDashboardProgress();
+
+  function setupDashboardProgress(){
+    if(!bigPbar) return;
+    const container = bigPbar.parentElement;
+    if(!container) return;
+
+    const radialWrap = document.createElement('div');
+    radialWrap.className = 'radial-wrap glass';
+    const radialTrack = document.createElement('div');
+    radialTrack.className = 'radial-track';
+    const radialValue = document.createElement('div');
+    radialValue.className = 'radial-value';
+    radialValue.textContent = '0%';
+    radialTrack.appendChild(radialValue);
+    radialWrap.appendChild(radialTrack);
+    container.appendChild(radialWrap);
+
+    const milestoneContainer = document.createElement('div');
+    milestoneContainer.className = 'milestone-container';
+    bigPbar.appendChild(milestoneContainer);
+    const milestones = [25, 50, 75, 100].map(val=>{
+      const span = document.createElement('span');
+      span.className = 'milestone';
+      span.style.left = val + '%';
+      span.innerHTML = `${val}% <span aria-hidden="true">🎯</span>`;
+      span.dataset.value = val;
+      milestoneContainer.appendChild(span);
+      span.addEventListener('mouseenter', ()=>showTooltip(span, `Target tercapai ${val}%`));
+      span.addEventListener('mouseleave', hideTooltip);
+      return span;
+    });
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'progress-particles';
+    container.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    const particles = [];
+
+    const tooltip = document.createElement('div');
+    tooltip.className = 'progress-tooltip';
+    container.appendChild(tooltip);
+
+    function resizeCanvas(){
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.setTransform(1,0,0,1,0,0);
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const easing = easeOutCubic;
+    animateCounter(totalScoreEl, 0, dashAnimations.targetScore, 900, v=> Math.round(v));
+    animateCounter(doneCountEl, 0, dashAnimations.targetDone, 800, v=> Math.round(v));
+    animateProgress(dashAnimations.targetPct);
+
+    function animateProgress(target){
+      if(!bigFill) return;
+      const start = 0;
+      const duration = 1100;
+      const startTime = performance.now();
+      const startWidth = parseFloat(bigFill.style.width) || 0;
+      const endWidth = target;
+
+      function frame(now){
+        const t = Math.min((now - startTime)/duration, 1);
+        const eased = easing(t);
+        const current = startWidth + (endWidth - startWidth) * eased;
+        bigFill.style.width = current + '%';
+        bigPbar.style.setProperty('--value', current + '%');
+        radialTrack.style.setProperty('--val', current + '%');
+        radialValue.textContent = Math.round(current) + '%';
+        updateMilestones(current);
+        if(t < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function animateCounter(el, start, end, duration, formatter = v=>v){
+      if(!el) return;
+      const sTime = performance.now();
+      function tick(now){
+        const t = Math.min((now - sTime)/duration, 1);
+        const eased = easeOutExpo(t);
+        const val = start + (end - start) * eased;
+        el.textContent = formatter(val);
+        if(t < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function updateMilestones(currentPct){
+      milestones.forEach(span=>{
+        const val = parseInt(span.dataset.value, 10);
+        const hit = currentPct >= val;
+        span.classList.toggle('hit', hit);
+        if(hit && !span.dataset.burst){
+          span.dataset.burst = '1';
+          triggerLevelUp();
+          spawnBurst(val/100);
+        }
+      });
+    }
+
+    function spawnBurst(ratio){
+      const rect = bigPbar.getBoundingClientRect();
+      const parentRect = container.getBoundingClientRect();
+      const originX = (rect.left - parentRect.left) + rect.width * ratio;
+      const originY = (rect.top - parentRect.top) + rect.height/2;
+      for(let i=0;i<14;i++){
+        particles.push({
+          x: originX + (Math.random()*18 - 9),
+          y: originY + (Math.random()*10 - 5),
+          vx: (Math.random()*1.2 - 0.6),
+          vy: (Math.random()*-1.2 - 0.3),
+          life: 60 + Math.random()*30,
+          size: 2 + Math.random()*2.5,
+          hue: 210 + Math.random()*30
+        });
+      }
+    }
+
+    function drawParticles(){
+      ctx.clearRect(0,0,canvas.width, canvas.height);
+      particles.forEach(p=>{
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.02;
+        p.life -= 1;
+      });
+      for(let i=particles.length-1;i>=0;i--){
+        const p = particles[i];
+        if(p.life <=0){ particles.splice(i,1); continue; }
+        ctx.save();
+        ctx.fillStyle = `hsla(${p.hue}, 85%, 70%, ${p.life/90})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+    requestAnimationFrame(function loop(){
+      drawParticles();
+      requestAnimationFrame(loop);
+    });
+
+    function triggerLevelUp(){
+      bigPbar.classList.add('level-up');
+      radialTrack.classList.add('level-up');
+      setTimeout(()=>{
+        bigPbar.classList.remove('level-up');
+        radialTrack.classList.remove('level-up');
+      }, 850);
+    }
+
+    function showTooltip(target, text){
+      tooltip.textContent = text;
+      const rect = target.getBoundingClientRect();
+      const parentRect = container.getBoundingClientRect();
+      const centerX = rect.left - parentRect.left + rect.width/2;
+      tooltip.style.left = `${centerX}px`;
+      tooltip.style.top = `${rect.top - parentRect.top - 8}px`;
+      container.classList.add('show-tooltip');
+    }
+
+    function hideTooltip(){
+      container.classList.remove('show-tooltip');
+    }
+
+    container.addEventListener('mouseenter', ()=>showTooltip(bigPbar, `Progres: ${dashAnimations.targetPct}% (${dashAnimations.targetDone}/${dashAnimations.total})`));
+    container.addEventListener('mouseleave', hideTooltip);
+    radialWrap.addEventListener('mouseenter', ()=>showTooltip(radialWrap, `Skor total: ${dashAnimations.targetScore}`));
+    radialWrap.addEventListener('mouseleave', hideTooltip);
+  }
+
+  function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+  function easeOutExpo(t){ return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); }
 
   
   // Quiz CyberLearn: 3 Courses (from PDF)
