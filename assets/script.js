@@ -1,7 +1,90 @@
 
 // Basic interactions and animations for demo
 document.addEventListener('DOMContentLoaded', () => {
-  // Tab switching on auth page
+  injectQuizStyles();
+
+  function injectQuizStyles(){
+    if(document.getElementById('quizEnhanceStyles')) return;
+    const style = document.createElement('style');
+    style.id = 'quizEnhanceStyles';
+    style.textContent = `
+      .choice-btn{
+        position: relative;
+        transition: transform 0.2s ease, box-shadow 0.35s ease, border-color 0.3s ease, background 0.3s ease;
+      }
+      .choice-btn.is-choosing{
+        animation: choicePulse 0.45s ease forwards;
+        box-shadow: 0 10px 25px rgba(43, 110, 246, 0.25);
+      }
+      .choice-btn.is-correct{
+        transform: translateY(-1px) scale(1.02);
+        box-shadow: 0 0 0 3px rgba(43, 110, 246, 0.35), 0 14px 30px rgba(43, 110, 246, 0.25);
+      }
+      .choice-btn.is-wrong{
+        box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.25), 0 14px 30px rgba(244, 63, 94, 0.2);
+      }
+      .choice-btn:disabled{
+        cursor: not-allowed;
+      }
+      .choice-btn::after{
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 10px;
+        opacity: 0;
+        pointer-events: none;
+        background: radial-gradient(circle at center, rgba(43,110,246,0.2), transparent 60%);
+        transition: opacity 0.2s ease;
+      }
+      .choice-btn.is-choosing::after{ opacity: 1; }
+      @keyframes choicePulse{
+        0%{ transform: scale(1); }
+        50%{ transform: scale(1.025); }
+        100%{ transform: scale(1); }
+      }
+      .primary.pulse-ready{
+        animation: pulseReady 1.35s ease-in-out infinite;
+        box-shadow: 0 15px 35px rgba(43, 110, 246, 0.25);
+      }
+      @keyframes pulseReady{
+        0%{ box-shadow: 0 0 0 0 rgba(43, 110, 246, 0.55); }
+        100%{ box-shadow: 0 0 0 18px rgba(43, 110, 246, 0); }
+      }
+      .sound-toggle{
+        border: 1px solid rgba(255,255,255,0.15);
+        background: linear-gradient(135deg, rgba(43,110,246,0.14), rgba(31,78,216,0.2));
+        color: #e5edff;
+        padding: 8px 12px;
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        cursor: pointer;
+        font-size: 13px;
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+      }
+      .sound-toggle:hover{ transform: translateY(-1px); box-shadow: 0 8px 18px rgba(43,110,246,0.25); }
+      .sound-toggle.is-choosing{ animation: choicePulse 0.35s ease; }
+      .sound-toggle.muted{ opacity: 0.7; }
+      .confetti-piece{
+        position: fixed;
+        top: -12px;
+        width: 8px;
+        height: 14px;
+        border-radius: 3px;
+        background: linear-gradient(180deg, #2b6ef6, #1f4ed8);
+        opacity: 0.95;
+        pointer-events: none;
+        transform: translate3d(0,0,0);
+        animation: confettiFall var(--dur, 2.6s) ease-out forwards;
+      }
+      @keyframes confettiFall{
+        0%{ opacity: 0.95; }
+        100%{ transform: translate3d(var(--x, 0px), 110vh, 0) rotate(var(--rot, 0deg)); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+// Tab switching on auth page
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -343,11 +426,59 @@ document.addEventListener('DOMContentLoaded', () => {
   const questionCountEl = document.getElementById('questionCount');
   const progressFill = document.getElementById('qprogress');
   const feedback = document.getElementById('qfeedback');
+  const qwrap = document.getElementById('qwrap');
   const quizBlurb = document.getElementById('quizBlurb');
+  const quizActions = document.querySelector('.quiz-actions');
+
+  let audioCtx;
+  let soundOn = localStorage.getItem('cy_quiz_sound') !== 'off';
+  let soundToggleBtn;
+
+  const contextualFeedback = {
+    '1': {
+      correct: [
+        'Mantap! Kamu menerapkan prinsip CIA Triad dengan tepat.',
+        'Jawaban pas, keamanan dasar jadi lebih kuat.',
+        'Hebat, kebiasaan aman makin menempel di ingatanmu.'
+      ],
+      wrong: [
+        'Perhatikan konsep kerahasiaan, integritas, dan ketersediaan untuk pilihan ini.',
+        'Coba ingat kembali contoh ancaman umum dan praktik paling aman.',
+        'Tinjau lagi prinsip dasar: mana yang paling melindungi data?'
+      ]
+    },
+    '2': {
+      correct: [
+        'Keren! Kebiasaan password-mu sudah sesuai best practice.',
+        'Pas banget, kombinasi perlindungan akunmu makin kuat.',
+        'Jago! Kamu paham cara menjaga kredensial tetap aman.'
+      ],
+      wrong: [
+        'Ingat: password unik + 2FA selalu jadi kombinasi terbaik.',
+        'Coba pikirkan kembali apa yang membuat password mudah dibobol.',
+        'Lihat lagi contoh pengelolaan password yang aman dan tidak diulang.'
+      ]
+    },
+    '3': {
+      correct: [
+        'Cermat! Kamu mengenali pola phishing dengan sigap.',
+        'Bagus, insting anti-social engineering kamu tajam.',
+        'Mantap, kamu tahu kapan harus berhenti sebelum tertipu.'
+      ],
+      wrong: [
+        'Ingat: selalu curigai pesan mendesak yang minta data atau OTP.',
+        'Coba evaluasi ciri-ciri phishing: domain, urgensi, dan permintaan data.',
+        'Kalau ragu, jangan klik—periksa dulu alamat dan sumber pesan.'
+      ]
+    }
+  };
 
   let qi = 0;
   let score = 0;
   let locked = false;
+  let revealTimeout;
+
+  initSoundToggle();
 
   if(questionCountEl) questionCountEl.textContent = qs.length;
   if(quizBlurb && currentLesson?.quizBlurb) quizBlurb.textContent = currentLesson.quizBlurb;
@@ -408,6 +539,9 @@ document.addEventListener('DOMContentLoaded', () => {
     nextBtn.addEventListener('click', ()=>{
       qi++;
       renderQ();
+      setTimeout(()=>{
+        if(qwrap) qwrap.scrollIntoView({behavior: 'smooth', block: 'center'});
+      }, 80);
     });
   }
 
@@ -430,10 +564,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderQ(){
     if(!qtext || !qopts) return;
     locked = false;
+    if(revealTimeout) clearTimeout(revealTimeout);
     const q = qs[qi];
     if(feedback) feedback.textContent = 'Pilih jawaban terbaikmu, lalu klik lanjut.';
     updateProgressBar();
-    if(nextBtn) nextBtn.disabled = true;
+    if(nextBtn){
+      nextBtn.disabled = true;
+      nextBtn.classList.remove('pulse-ready');
+    }
 
     if(!q){
       qtext.textContent = 'Quiz selesai! Skor kamu: ' + score;
@@ -442,6 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if(progressFill) progressFill.style.width = '100%';
       if(questionNumberEl) questionNumberEl.textContent = qs.length;
       if(feedback) feedback.textContent = 'Bagikan skor ini di dashboard (demo).';
+      triggerConfetti();
       return;
     }
 
@@ -459,24 +598,107 @@ document.addEventListener('DOMContentLoaded', () => {
   function handleAnswer(idx, correctIdx){
     if(locked || !qopts) return;
     locked = true;
-    if(idx === correctIdx){
-      score += 10;
-      if(feedback) feedback.textContent = 'Benar! Jawaban tepat menambah +10 poin.';
-    } else {
-      score = Math.max(0, score - 2);
-      if(feedback) feedback.textContent = 'Kurang tepat. Jawaban benar diberi highlight hijau.';
-    }
-    if(qscore) qscore.textContent = score;
     const buttons = qopts.querySelectorAll('.choice-btn');
-    buttons.forEach((b, i)=>{
+    buttons.forEach((b)=>{
       b.disabled = true;
-      if(i === correctIdx) b.classList.add('is-correct');
-      if(i === idx && idx !== correctIdx) b.classList.add('is-wrong');
     });
-    if(progressFill) progressFill.style.width = ((qi+1)/qs.length)*100 + '%';
-    if(nextBtn){
-      nextBtn.disabled = false;
-      nextBtn.textContent = (qi === qs.length-1) ? 'Lihat Hasil' : 'Lanjut Soal';
+    const selected = buttons[idx];
+    if(selected) selected.classList.add('is-choosing');
+    if(feedback) feedback.textContent = 'Memeriksa jawabanmu...';
+
+    revealTimeout = setTimeout(()=>{
+      const isCorrect = idx === correctIdx;
+      if(isCorrect){
+        score += 10;
+      } else {
+        score = Math.max(0, score - 2);
+      }
+      const message = getFeedbackText(isCorrect, courseParam);
+      if(feedback) feedback.textContent = message;
+      if(qscore) qscore.textContent = score;
+
+      buttons.forEach((b, i)=>{
+        b.classList.remove('is-choosing');
+        if(i === correctIdx) b.classList.add('is-correct');
+        if(i === idx && idx !== correctIdx) b.classList.add('is-wrong');
+      });
+      playTone(isCorrect ? 'success' : 'error');
+
+      if(progressFill) progressFill.style.width = ((qi+1)/qs.length)*100 + '%';
+      if(nextBtn){
+        nextBtn.disabled = false;
+        nextBtn.textContent = (qi === qs.length-1) ? 'Lihat Hasil' : 'Lanjut Soal';
+        nextBtn.classList.add('pulse-ready');
+      }
+    }, 500);
+  }
+
+  function getFeedbackText(isCorrect, courseKey){
+    const bank = contextualFeedback[courseKey] || contextualFeedback['1'];
+    const list = isCorrect ? bank.correct : bank.wrong;
+    if(list && list.length){
+      const i = Math.floor(Math.random() * list.length);
+      return list[i];
+    }
+    return isCorrect ? 'Benar! Jawaban tepat menambah +10 poin.' : 'Kurang tepat. Pelajari lagi topiknya.';
+  }
+
+  function initSoundToggle(){
+    if(!quizActions || soundToggleBtn) return;
+    soundToggleBtn = document.createElement('button');
+    soundToggleBtn.className = 'sound-toggle';
+    updateSoundToggleLabel();
+    soundToggleBtn.addEventListener('click', ()=>{
+      soundOn = !soundOn;
+      localStorage.setItem('cy_quiz_sound', soundOn ? 'on' : 'off');
+      updateSoundToggleLabel();
+      soundToggleBtn.classList.add('is-choosing');
+      setTimeout(()=> soundToggleBtn.classList.remove('is-choosing'), 250);
+    });
+    quizActions.insertBefore(soundToggleBtn, quizActions.firstChild);
+  }
+
+  function updateSoundToggleLabel(){
+    if(!soundToggleBtn) return;
+    soundToggleBtn.textContent = soundOn ? '🔊 Suara aktif' : '🔈 Suara mati';
+    soundToggleBtn.classList.toggle('muted', !soundOn);
+  }
+
+  function playTone(type){
+    if(!soundOn) return;
+    try{
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      const now = audioCtx.currentTime;
+      const freq = type === 'success' ? 820 : 260;
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.exponentialRampToValueAtTime(0.08, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.28);
+    } catch(e){}
+  }
+
+  function triggerConfetti(){
+    const pieces = 28;
+    for(let i=0; i<pieces; i++){
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      const randomX = Math.random()*100;
+      const rotate = (Math.random()*180 - 90).toFixed(0) + 'deg';
+      const duration = (Math.random()*1.3 + 1.9).toFixed(2) + 's';
+      el.style.left = randomX + 'vw';
+      el.style.setProperty('--x', (Math.random()*120 - 60) + 'px');
+      el.style.setProperty('--rot', rotate);
+      el.style.setProperty('--dur', duration);
+      el.style.opacity = (Math.random()*0.3 + 0.7).toFixed(2);
+      el.style.background = Math.random() > 0.5 ? 'linear-gradient(180deg, #2b6ef6, #1f4ed8)' : 'linear-gradient(180deg, #7bdcff, #2b6ef6)';
+      document.body.appendChild(el);
+      setTimeout(()=> el.remove(), parseFloat(duration)*1000 + 300);
     }
   }
 // Simulation choices
