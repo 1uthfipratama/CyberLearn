@@ -895,14 +895,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 // Simulation choices
-  document.querySelectorAll('.sim-card .choices button').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      const ok = b.getAttribute('data-correct') === 'true';
-      const res = document.getElementById('simResult');
-      if(ok){ res.textContent = 'Bagus! Pilihan aman.'; res.style.color = '#8bf0a2'; }
-      else { res.textContent = 'Pilihan berisiko. Jangan lakukan ini.'; res.style.color = '#ff8b8b'; }
+  if(!simCard || simCard.dataset.enhanced !== 'true'){
+    document.querySelectorAll('.sim-card .choices button').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const ok = b.getAttribute('data-correct') === 'true';
+        const res = document.getElementById('simResult');
+        if(ok){ res.textContent = 'Bagus! Pilihan aman.'; res.style.color = '#8bf0a2'; }
+        else { res.textContent = 'Pilihan berisiko. Jangan lakukan ini.'; res.style.color = '#ff8b8b'; }
+      });
     });
-  });
+  }
 
   // Certificate download (demo)
   const dl = document.getElementById('downloadCert');
