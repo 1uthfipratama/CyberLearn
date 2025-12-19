@@ -720,6 +720,8 @@ document.addEventListener('DOMContentLoaded', () => {
     qtitle.textContent = 'Quiz — ' + currentQuiz.title;
   }
   if(qscore) qscore.textContent = score;
+  setupLessonPage();
+  setupForumUX();
 
   if(startQuiz && qtext && qopts){
     startQuiz.addEventListener('click', ()=>{
